@@ -1,0 +1,368 @@
+@import "breakpoints.css";
+@import "fonts.css";
+@import "tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #faf9f7;
+  --text: #1a1a1a;
+  --muted: #5c5c5c;
+  --accent: #c45c3e;
+  --border: #e4e0da;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141312;
+    --text: #f2efe9;
+    --muted: #a8a29a;
+    --accent: #e07a5f;
+    --border: #2e2b28;
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-base);
+  font-weight: var(--font-weight-base);
+  line-height: var(--line-height-base);
+  color: var(--text);
+  background: var(--bg);
+}
+
+a {
+  color: var(--accent);
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  line-height: var(--line-height-base);
+  font-weight: var(--font-weight-base);
+}
+
+p {
+  margin: 0 0 var(--spacing-s);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* ——— Cabecera y pie ——— */
+
+.site-header,
+.site-footer {
+  width: 100%;
+  padding: var(--spacing-s);
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-s);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-logo {
+  font-size: var(--font-size-m);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-s);
+  font-size: var(--font-size-xs);
+}
+
+.site-nav a {
+  text-decoration: none;
+}
+
+.site-main {
+  width: 100%;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: var(--font-size-xxs);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+/* ——— Secciones ——— */
+
+.section {
+  width: 100%;
+  padding-block: var(--spacing-xl);
+  padding-inline: var(--spacing-s);
+}
+
+.section__inner {
+  width: 100%;
+}
+
+.section__header {
+  padding-inline: var(--spacing-s);
+  margin-bottom: var(--spacing-m);
+}
+
+.section--bus {
+  padding-inline: 0;
+  padding-block: var(--spacing-xl) 0;
+  background: color-mix(in srgb, var(--text) 4%, var(--bg));
+  border-block: 1px solid var(--border);
+}
+
+.section__lead {
+  margin-top: var(--spacing-xxs);
+  color: var(--muted);
+  font-size: var(--font-size-s);
+}
+
+/* ——— Hero ——— */
+
+.hero {
+  width: 100%;
+  min-height: clamp(18rem, 42dvh, 32rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--spacing-xxl) var(--spacing-s) var(--spacing-xl);
+}
+
+.hero h1 {
+  font-size: var(--font-size-xl);
+  max-width: 14em;
+}
+
+.hero p {
+  margin-top: var(--spacing-s);
+  color: var(--muted);
+  font-size: var(--font-size-s);
+  max-width: 32em;
+}
+
+/* ——— Tipografía global ——— */
+
+h2 {
+  font-size: var(--font-size-l);
+}
+
+h3 {
+  font-size: var(--font-size-m);
+}
+
+/* ——— Vídeo a sangre completa ——— */
+
+.video-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+/* ——— Vídeo controlado por ratón ——— */
+
+.video-wrap--scrub {
+  position: relative;
+  background: #000;
+  cursor: ew-resize;
+  touch-action: none;
+  user-select: none;
+}
+
+.video-wrap--scrub .video {
+  pointer-events: none;
+}
+
+.video-scrub__controls {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: var(--spacing-l) var(--spacing-s) var(--spacing-s);
+  background: linear-gradient(to top, rgb(0 0 0 / 0.8), transparent);
+  pointer-events: none;
+}
+
+.video-scrub__progress {
+  width: 100%;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.25);
+}
+
+.video-scrub__progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transition: none;
+}
+
+.video-scrub__time {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  margin: var(--spacing-xxs) 0 0;
+  color: #fff;
+  font-size: var(--font-size-xxs);
+  font-variant-numeric: tabular-nums;
+}
+
+.video-scrub__time-sep,
+.video-scrub__time-unit {
+  color: rgb(255 255 255 / 0.65);
+}
+
+.video-scrub__hint {
+  margin: var(--spacing-xs) 0 0;
+  padding-inline: var(--spacing-s);
+  color: var(--muted);
+  font-size: var(--font-size-xxs);
+  text-align: center;
+}
+
+@media (hover: none) {
+  .video-scrub__hint::after {
+    content: " · Desliza para recorrer";
+  }
+}
+
+/* ——— Utilidades ——— */
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--font-size-xxs);
+  padding: var(--spacing-xxxs) var(--spacing-xxs);
+  border-radius: var(--spacing-xxxs);
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+/* ——— Blog ——— */
+
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-l) 0 0;
+  width: 100%;
+}
+
+.post-list li {
+  padding: var(--spacing-m) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.post-list li:first-child {
+  padding-top: 0;
+}
+
+.post-list a {
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-base);
+  text-decoration: none;
+}
+
+.post-list time {
+  display: block;
+  margin-top: var(--spacing-xxs);
+  color: var(--muted);
+  font-size: var(--font-size-xxs);
+}
+
+.post-list p {
+  margin-top: var(--spacing-xs);
+  color: var(--muted);
+}
+
+.post {
+  width: 100%;
+  padding: var(--spacing-xxl) var(--spacing-s);
+}
+
+.post-header h1 {
+  font-size: var(--font-size-xl);
+}
+
+.post-date {
+  display: block;
+  margin-top: var(--spacing-xs);
+  color: var(--muted);
+  font-size: var(--font-size-xxs);
+}
+
+.prose {
+  margin-top: var(--spacing-l);
+  font-size: var(--font-size-xs);
+}
+
+.prose h2,
+.prose h3 {
+  margin-top: var(--spacing-l);
+}
+
+.prose pre {
+  overflow-x: auto;
+  padding: var(--spacing-s);
+  border-radius: var(--spacing-xs);
+  font-size: var(--font-size-xxs);
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: var(--spacing-m);
+}
+
+/* ——— Páginas internas ——— */
+
+.page {
+  width: 100%;
+  padding: var(--spacing-xxl) var(--spacing-s);
+}
+
+.page h1 {
+  margin-bottom: var(--spacing-s);
+  font-size: var(--font-size-xl);
+}

@@ -1,0 +1,20 @@
+<section class="section section--bus"{% if section.data.id %} id="{{ section.data.id }}"{% endif %}>
+  <div class="section__header">
+    {% if section.data.title %}<h2>{{ section.data.title }}</h2>{% endif %}
+    {% if section.data.lead %}<p class="section__lead">{{ section.data.lead }}</p>{% endif %}
+  </div>
+  <div class="video-wrap">
+    <video
+      class="video"
+      src="{{ section.data.src | url }}"
+      {% if section.data.controls %}controls{% endif %}
+      {% if section.data.playsinline %}playsinline{% endif %}
+      {% if section.data.preload %}preload="{{ section.data.preload }}"{% endif %}
+      {% if section.data.autoplay %}autoplay{% endif %}
+      {% if section.data.loop %}loop{% endif %}
+      {% if section.data.muted %}muted{% endif %}
+    >
+      {{ section.data.fallback or "Tu navegador no soporta la reproducción de vídeo." }}
+    </video>
+  </div>
+</section>

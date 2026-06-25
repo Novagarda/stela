@@ -1,0 +1,34 @@
+<section class="section section--bus"{% if section.data.id %} id="{{ section.data.id }}"{% endif %}>
+  <div class="section__header">
+    {% if section.data.title %}<h2>{{ section.data.title }}</h2>{% endif %}
+    {% if section.data.lead %}<p class="section__lead">{{ section.data.lead }}</p>{% endif %}
+  </div>
+  <div data-video-scrub>
+    <div
+      class="video-wrap video-wrap--scrub"
+      data-video-scrub-viewport
+      tabindex="0"
+      aria-label="{{ section.data.ariaLabel or 'Recorre el autobús moviendo el ratón de izquierda a derecha' }}"
+    >
+      <video
+        class="video"
+        src="{{ section.data.src | url }}"
+        playsinline
+        preload="auto"
+      ></video>
+      <div class="video-scrub__controls" aria-hidden="true">
+        <div class="video-scrub__progress">
+          <div class="video-scrub__progress-fill" data-video-scrub-progress></div>
+        </div>
+        <p class="video-scrub__time">
+          <span data-video-scrub-current>0.0</span>
+          <span class="video-scrub__time-sep">/</span>
+          <span data-video-scrub-duration>0.0</span>
+          <span class="video-scrub__time-unit">s</span>
+        </p>
+      </div>
+    </div>
+    <p class="video-scrub__hint" aria-hidden="true">{{ section.data.hint or "Mueve el ratón para recorrer" }}</p>
+  </div>
+</section>
+<script type="module" src="{{ '/assets/js/panorama.js' | url }}"></script>

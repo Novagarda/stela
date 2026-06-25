@@ -1,0 +1,8 @@
+---
+layout: layouts/base.njk
+title: Inicio
+---
+
+{% for section in collections.homeSections %}
+  {% include "sections/" ~ section.data.type ~ ".njk" %}
+{% endfor %}

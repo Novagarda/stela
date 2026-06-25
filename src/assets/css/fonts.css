@@ -1,0 +1,31 @@
+/* Fuentes — baseNVGRD / rebase */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+@font-face {
+  font-family: "bsm";
+  src:
+    url("../fonts/basiersquaremono-regular-webfont.woff2") format("woff2"),
+    url("../fonts/basiersquaremono-regular-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* @font-face {
+  font-family: "sf";
+  src:
+    url("../fonts/sfr.woff2") format("woff2"),
+    url("../fonts/sfr.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "sf";
+  src:
+    url("../fonts/sfri.woff2") format("woff2"),
+    url("../fonts/sfri.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+} */

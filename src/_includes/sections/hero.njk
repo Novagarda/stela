@@ -1,0 +1,9 @@
+<section class="hero">
+  <h1>
+    {{ section.data.title -}}
+    {%- if section.data.appendSiteTitle %} {{ site.title }}{% endif %}
+  </h1>
+  {% if section.data.lead %}
+    <p>{{ section.data.lead }}</p>
+  {% endif %}
+</section>

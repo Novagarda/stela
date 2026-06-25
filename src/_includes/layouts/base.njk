@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{{ description or site.description }}" />
+    <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | url }}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="site-logo" href="{{ '/' | url }}">{{ site.title }}</a>
+      <nav class="site-nav">
+        <a href="{{ '/' | url }}">Inicio</a>
+        <a href="{{ '/blog/' | url }}">Blog</a>
+        <a href="{{ '/about/' | url }}">Acerca de</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      {{ content | safe }}
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; {{ year }} {{ site.title }}</p>
+    </footer>
+  </body>
+</html>

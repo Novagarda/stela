@@ -3,7 +3,7 @@
     {% if section.data.title %}<h2>{{ section.data.title }}</h2>{% endif %}
     {% if section.data.lead %}<p class="section__lead">{{ section.data.lead }}</p>{% endif %}
   </div>
-  <div class="video-wrap">
+  <div class="video-wrap video-wrap--player">
     <video
       class="video"
       src="{{ section.data.src | url }}"

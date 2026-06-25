@@ -11,11 +11,22 @@
       aria-label="{{ section.data.ariaLabel or 'Recorre el autobús moviendo el ratón de izquierda a derecha' }}"
     >
       <video
-        class="video"
+        class="video video--source"
         src="{{ section.data.src | url }}"
         playsinline
+        muted
         preload="auto"
       ></video>
+      <canvas class="video video--canvas" data-video-scrub-canvas aria-hidden="true"></canvas>
+      <button
+        type="button"
+        class="video-scrub__unlock"
+        data-video-scrub-unlock
+        aria-label="{{ section.data.unlockLabel or 'Toca para explorar el autobús' }}"
+      >
+        <span class="video-scrub__unlock-icon" aria-hidden="true">▶</span>
+        <span class="video-scrub__unlock-label">{{ section.data.unlockLabel or "Toca para explorar" }}</span>
+      </button>
       <div class="video-scrub__controls" aria-hidden="true">
         <div class="video-scrub__progress">
           <div class="video-scrub__progress-fill" data-video-scrub-progress></div>

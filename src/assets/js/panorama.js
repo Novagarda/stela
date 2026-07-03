@@ -22,6 +22,7 @@ function initVideoScrub(root) {
   const canvas = root.querySelector("[data-video-scrub-canvas]");
   const unlockBtn = root.querySelector("[data-video-scrub-unlock]");
   const progress = root.querySelector("[data-video-scrub-progress]");
+  const progressDot = root.querySelector("[data-video-scrub-progress-dot]");
   const currentEl = root.querySelector("[data-video-scrub-current]");
   const durationEl = root.querySelector("[data-video-scrub-duration]");
   if (!video) return;
@@ -40,6 +41,10 @@ function initVideoScrub(root) {
 
     if (progress) {
       progress.style.width = `${progressValue}%`;
+    }
+
+    if (progressDot) {
+      progressDot.style.left = `${progressValue}%`;
     }
 
     if (currentEl) {
@@ -70,7 +75,7 @@ function initVideoScrub(root) {
 
     const width = viewport.clientWidth;
     const height = viewport.clientHeight;
-    const scale = Math.max(width / video.videoWidth, height / video.videoHeight);
+    const scale = Math.min(width / video.videoWidth, height / video.videoHeight);
     const drawWidth = video.videoWidth * scale;
     const drawHeight = video.videoHeight * scale;
     const offsetX = (width - drawWidth) / 2;

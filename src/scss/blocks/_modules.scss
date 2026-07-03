@@ -25,11 +25,10 @@
 
   &__image {
     display: block;
-    width: auto;
     max-width: 100%;
     height: auto;
     // max-height: clamp(6rem, 14vw, 10rem);
-    object-fit: contain;
+    object-fit: cover;
   }
 
   &__placeholder {

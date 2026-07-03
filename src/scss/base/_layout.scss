@@ -1,0 +1,64 @@
+body {
+  transition: background-color 500ms ease;
+}
+
+.main,
+.site-main {
+  width: 100%;
+  transform-origin: center center;
+  min-height: 100dvh;
+  overflow-x: clip;
+}
+
+.page {
+
+  &-title {
+    padding-bottom: var(--spacing-s);
+  }
+
+  &-subtitle {
+    padding-bottom: var(--spacing-s);
+  }
+}
+
+.content-gutter {
+  @include content-gutter-x;
+}
+
+// Page/single markup outside Gutenberg blocks.
+.article-h1,
+.single-header {
+  @include content-gutter-x;
+}
+
+.image {
+  max-height: 100vh;
+  overflow: hidden;
+
+  picture {
+    display: block;
+    position: relative;
+    height: 100%;
+    padding-top: calc(100%*var(--aspect));
+  }
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    object-fit: contain;
+    object-position: center center;
+    max-height: 100vh;
+    -webkit-filter: blur(3px);
+    filter: blur(3px);
+    transition: filter 1000ms ease-out 500ms;
+
+    &.loaded {
+      filter: none;
+      -webkit-filter: none;
+    }
+  }
+
+}

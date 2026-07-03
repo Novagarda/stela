@@ -1,0 +1,40 @@
+.section {
+  width: 100%;
+  padding-block: var(--spacing-xl);
+  padding-inline: var(--spacing-s);
+
+  &__inner {
+    width: 100%;
+  }
+
+  &__header {
+    padding-inline: var(--spacing-s);
+    margin-bottom: var(--spacing-m);
+  }
+
+  &__lead {
+    margin-top: var(--spacing-xxs);
+    color: var(--muted);
+    @include type-body;
+  }
+
+  &--intro {
+    .prose {
+      margin-top: 0;
+      max-width: 52rem;
+      @include type-body;
+
+      p+p {
+        margin-top: var(--spacing-m);
+      }
+    }
+  }
+
+  &--prose {
+    // marker class for prose sections
+  }
+
+  &--bus {
+    padding-block: 0;
+  }
+}

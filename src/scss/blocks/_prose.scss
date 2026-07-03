@@ -1,0 +1,43 @@
+.prose {
+  margin-top: var(--spacing-l);
+  font-size: var(--font-size-xs);
+
+  p {
+    margin-bottom: var(--spacing-s);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  h2,
+  h3 {
+    margin-top: var(--spacing-l);
+  }
+
+  pre {
+    overflow-x: auto;
+    padding: var(--spacing-s);
+    border-radius: var(--spacing-xs);
+    font-size: var(--font-size-xxs);
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+  }
+
+  pre code {
+    padding: 0;
+    background: none;
+  }
+
+  ul,
+  ol {
+    padding-left: var(--spacing-m);
+  }
+}
+
+code {
+  font-family: var(--font-base);
+  font-size: var(--font-size-xxs);
+  padding: var(--spacing-xxxs) var(--spacing-xxs);
+  border-radius: var(--spacing-xxxs);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+}

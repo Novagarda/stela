@@ -1,0 +1,35 @@
+// Base layout shared by all content blocks.
+.block {
+  @include grid12;
+  padding: 0 var(--spacing-s);
+  padding-bottom: var(--spacing-l);
+
+  .inner {
+    grid-column: 1 / -1;
+  }
+
+  &--bleed {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &--narrow {
+    .inner {
+      @include media-breakpoint-up(md) {
+        grid-column: 4 / span 6;
+      }
+    }
+  }
+
+  &.is-placeholder {
+    .inner,
+    & > p {
+      margin: 0;
+      border: 1px dashed var(--primary);
+      padding: var(--spacing-s);
+      color: var(--gray);
+      font-style: italic;
+      font-size: var(--font-size-xxs);
+    }
+  }
+}

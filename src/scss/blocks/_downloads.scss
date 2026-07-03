@@ -1,0 +1,20 @@
+.section--downloads {
+  padding-block-end: 0;
+}
+
+.downloads {
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item:not(:first-child) {
+    margin-top: -1px;
+  }
+
+  &__label {
+    @include download-link-box;
+    color: var(--muted);
+  }
+}

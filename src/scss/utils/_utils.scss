@@ -1,0 +1,92 @@
+// Cover Fit Single Image
+.img-fit {
+  object-fit: cover;
+  min-height: 100%;
+}
+
+// Cover Fit Picture version
+picture.img-fit {
+  object-fit: cover;
+  min-height: 100%;
+
+  img {
+    height: 100%;
+  }
+}
+
+.lock-scroll {
+  overflow-y: hidden;
+}
+
+.stretched-link::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: auto;
+  content: "";
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-justify {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.no-underlined a {
+  background-color: inherit !important;
+  color: inherit !important;
+
+  &:hover {
+    color: inherit !important;
+    background-color: inherit !important;
+    text-decoration: underline;
+  }
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.p-spaced p {
+  padding-bottom: var(--spacing-xs);
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
+}
+
+.--uppercase {
+  text-transform: uppercase;
+}
+
+.arrow-spacer {
+  font-feature-settings: 'ss03';
+}
+
+.sticky {
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--adminbar-height));
+}

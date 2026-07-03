@@ -1,0 +1,77 @@
+:root {
+  --font-serif: "Times New Roman", SSFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans: "Test Söhne", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-base: var(--font-sans);
+  --font-weight-base: 400;
+  --line-height-base: 1.2;
+  --font-size-root: 100%;
+
+  --font-size-xxxl: #{(89.76px / 16px) * 1rem};
+  --font-size-xxl: #{(67.34px / 16px) * 1rem};
+  --font-size-xl: #{(50.52px / 16px) * 1rem};
+  --font-size-l: #{(37.90px / 16px) * 1rem};
+  --font-size-m: #{(28.43px / 16px) * 1rem};
+  --font-size-s: #{(21.33px / 16px) * 1rem};
+  --font-size-xs: #{(16.00px / 16px) * 1rem};
+  --font-size-xxs: #{(12.00px / 16px) * 1rem};
+  --font-size-xxxs: #{(9.00px / 16px) * 1rem};
+
+  --line-height-sans: 1;
+  --line-height-body: 1.1;
+  --letter-spacing: 0;
+
+  --zoom: 1;
+  --min-font-size: 15px;
+  --max-font-size: 25px;
+  --font-size: clamp(var(--min-font-size), 1.11111vw * var(--zoom), var(--max-font-size));
+  font-size: var(--font-size);
+
+  @include media-breakpoint-down(sm) {
+    font-size: 16px;
+  }
+}
+
+.--font-size-xxxl {
+  font-size: var(--font-size-xxxl);
+}
+
+.--font-size-xxl {
+  font-size: var(--font-size-xxl);
+}
+
+.--font-size-xl {
+  font-size: var(--font-size-xl);
+}
+
+.--font-size-l {
+  font-size: var(--font-size-l);
+}
+
+.--font-size-m {
+  font-size: var(--font-size-m);
+}
+
+.--font-size-s {
+  font-size: var(--font-size-s);
+}
+
+.--font-size-xs {
+  font-size: var(--font-size-xs);
+}
+
+.--font-size-xxs {
+  font-size: var(--font-size-xxs);
+}
+
+.--font-size-xxxs {
+  font-size: var(--font-size-xxxs);
+}
+
+@mixin type-body {
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-body);
+}
+
+.--type-body {
+  @include type-body;
+}

@@ -14,6 +14,8 @@ function openBrowser(url) {
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addWatchTarget("src/assets/");
+  eleventyConfig.addWatchTarget("src/scss/");
+  eleventyConfig.addWatchTarget("src/js/");
   eleventyConfig.addWatchTarget("src/content/");
 
   eleventyConfig.addCollection("homeSections", (collection) => {
@@ -26,22 +28,6 @@ export default function (eleventyConfig) {
     ready: (server) => {
       openBrowser(server.getServerUrl("localhost"));
     },
-  });
-
-  eleventyConfig.addNunjucksFilter("readableDate", (dateObj) => {
-    return dateObj.toLocaleDateString("es-ES", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  });
-
-  eleventyConfig.addNunjucksFilter("isoDate", (dateObj) => {
-    return dateObj.toISOString().slice(0, 10);
-  });
-
-  eleventyConfig.addCollection("posts", (collection) => {
-    return collection.getFilteredByTag("posts").sort((a, b) => b.date - a.date);
   });
 
   return {

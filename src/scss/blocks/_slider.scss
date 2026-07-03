@@ -1,0 +1,140 @@
+:root {
+  --slider-max-height: 30rem;
+  --slider-max-height-3: 25rem;
+}
+
+.section--gallery {
+  position: relative;
+  z-index: 0;
+  display: flow-root;
+  overflow: hidden;
+  padding-inline: 0;
+}
+
+.block.block-slider-3 {
+  display: block;
+  padding: 0 var(--spacing-s);
+  margin: 0;
+}
+
+.block-slider {
+  padding-block: var(--spacing-l);
+  padding-inline: var(--spacing-s);
+
+  .slider--single {
+    .slider-pagination,
+    .flickity-prev-next-button {
+      display: none;
+    }
+  }
+
+  .slider {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .slide {
+    width: 100%;
+  }
+
+  .item-caption {
+    display: none;
+  }
+
+  .slider-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--primary);
+    padding-top: var(--spacing-xs);
+  }
+
+  .slider-caption {
+    font-size: var(--font-size-xs);
+  }
+
+  .slider-pagination {
+    margin-left: auto;
+    font-size: var(--font-size-xxs);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .flickity-button {
+    background: var(--accent);
+  }
+
+  .flickity-button-icon {
+    fill: var(--secondary);
+  }
+
+  .image img {
+    filter: none;
+  }
+}
+
+.block-slider-3 {
+  .slider {
+    min-height: var(--slider-max-height-3);
+  }
+
+  .flickity-viewport {
+    min-height: var(--slider-max-height-3);
+  }
+
+  .slide {
+    width: auto;
+    height: var(--slider-max-height-3);
+    margin-right: var(--spacing-s);
+  }
+
+  .flickity-button {
+    background: var(--accent);
+  }
+
+  .flickity-button-icon {
+    fill: var(--secondary);
+  }
+
+  .item {
+    display: inline-block;
+    height: 100%;
+  }
+
+  .image {
+    width: auto;
+    max-height: none;
+    height: var(--slider-max-height-3);
+    overflow: hidden;
+
+    &--placeholder {
+      width: calc(var(--slider-max-height-3) * 0.75);
+      height: var(--slider-max-height-3);
+      background: color-mix(in srgb, var(--primary) 8%, var(--secondary));
+    }
+
+    picture {
+      display: block;
+      position: relative;
+      height: var(--slider-max-height-3) !important;
+      width: calc(var(--slider-max-height-3) / var(--aspect, 0.75)) !important;
+      padding-top: 0 !important;
+      max-height: none;
+    }
+
+    img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: cover;
+      filter: none !important;
+    }
+  }
+
+  .item-caption {
+    font-size: var(--font-size-xxs);
+    color: var(--primary);
+  }
+}

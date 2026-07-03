@@ -27,19 +27,19 @@
         <span class="video-scrub__unlock-icon" aria-hidden="true">▶</span>
         <span class="video-scrub__unlock-label">{{ section.data.unlockLabel or "Toca para explorar" }}</span>
       </button>
-      <div class="video-scrub__controls" aria-hidden="true">
-        <div class="video-scrub__progress">
-          <div class="video-scrub__progress-fill" data-video-scrub-progress></div>
-        </div>
-        <p class="video-scrub__time">
-          <span data-video-scrub-current>0.0</span>
-          <span class="video-scrub__time-sep">/</span>
-          <span data-video-scrub-duration>0.0</span>
-          <span class="video-scrub__time-unit">s</span>
-        </p>
-      </div>
     </div>
-    <p class="video-scrub__hint" aria-hidden="true">{{ section.data.hint or "Mueve el ratón para recorrer" }}</p>
+    <div class="video-scrub__controls" aria-hidden="true">
+      <div class="video-scrub__progress">
+        <div class="video-scrub__progress-fill" data-video-scrub-progress></div>
+        <span class="video-scrub__progress-dot" data-video-scrub-progress-dot aria-hidden="true"></span>
+      </div>
+      <p class="video-scrub__time">
+        <span data-video-scrub-current>0.0</span>
+        <span class="video-scrub__time-sep">/</span>
+        <span data-video-scrub-duration>0.0</span>
+        <span class="video-scrub__time-unit">s</span>
+      </p>
+    </div>
   </div>
 </section>
 <script type="module" src="{{ '/assets/js/panorama.js' | url }}"></script>

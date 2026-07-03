@@ -1,6 +1,6 @@
 ---
 type: panorama
-order: 2
+order: 8
 id: autobus
 title:
 lead:

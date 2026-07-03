@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="{{ description or site.description }}" />
     <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/flickity.css' | url }}" />
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | url }}" />
   </head>
   <body>
     <header class="site-header">
       <a class="site-logo" href="{{ '/' | url }}">{{ site.title }}</a>
-      <nav class="site-nav">
-        <a href="{{ '/' | url }}">Inicio</a>
-        <a href="{{ '/blog/' | url }}">Blog</a>
-        <a href="{{ '/about/' | url }}">Acerca de</a>
+      <nav class="site-nav" aria-label="Seccións">
+        {% for item in site.navigation %}
+          <a href="{{ '/' | url }}#{{ item.id }}">{{ item.label }}</a>
+        {% endfor %}
       </nav>
     </header>
 
@@ -21,8 +22,6 @@
       {{ content | safe }}
     </main>
 
-    <footer class="site-footer">
-      <p>&copy; {{ year }} {{ site.title }}</p>
-    </footer>
+    {% include "components/footer.njk" %}
   </body>
 </html>

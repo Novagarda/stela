@@ -1,0 +1,12 @@
+<section class="section section--download"{% if section.data.id %} id="{{ section.data.id }}"{% endif %}>
+  <div class="section__inner download">
+    <a
+      class="download__link"
+      href="{{ section.data.href | url }}"
+      target="_blank"
+      rel="noopener"
+    >
+      {{ section.data.label }}
+    </a>
+  </div>
+</section>

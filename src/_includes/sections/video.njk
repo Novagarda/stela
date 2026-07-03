@@ -1,9 +1,11 @@
-<section class="section section--bus"{% if section.data.id %} id="{{ section.data.id }}"{% endif %}>
+<section class="section section--video"{% if section.data.id %} id="{{ section.data.id }}"{% endif %}>
+  {% if section.data.title or section.data.lead %}
   <div class="section__header">
     {% if section.data.title %}<h2>{{ section.data.title }}</h2>{% endif %}
     {% if section.data.lead %}<p class="section__lead">{{ section.data.lead }}</p>{% endif %}
   </div>
-  <div class="video-wrap video-wrap--player">
+  {% endif %}
+  <div class="video-wrap video-wrap--player" data-video-viewport>
     <video
       class="video"
       src="{{ section.data.src | url }}"
@@ -18,3 +20,4 @@
     </video>
   </div>
 </section>
+<script type="module" src="{{ '/assets/js/video.js' | url }}"></script>

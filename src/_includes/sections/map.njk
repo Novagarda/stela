@@ -1,0 +1,15 @@
+<section class="section section--map"{% if section.data.id %} id="{{ section.data.id }}"{% endif %}>
+  <div class="section__inner map">
+    <figure class="map__figure">
+      <img
+        class="map__image"
+        src="{{ section.data.src | url }}"
+        alt="{{ section.data.alt }}"
+        {% if section.data.width %}width="{{ section.data.width }}"{% endif %}
+        {% if section.data.height %}height="{{ section.data.height }}"{% endif %}
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+  </div>
+</section>

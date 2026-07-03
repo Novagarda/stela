@@ -1,0 +1,5 @@
+<section class="section section--intro"{% if section.data.id %} id="{{ section.data.id }}"{% endif %}>
+  <div class="section__inner prose">
+    {{ section.templateContent | safe }}
+  </div>
+</section>

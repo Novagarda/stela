@@ -1,8 +1,4 @@
-const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const NEEDS_UNLOCK = window.matchMedia("(hover: none)").matches;
-const SMOOTHING = 0.28;
-const SEEK_EPSILON = 0.025;
-const STOP_EPSILON = 0.01;
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
@@ -31,10 +27,7 @@ function initVideoScrub(root) {
   let unlocked = !NEEDS_UNLOCK;
   let active = false;
   let targetTime = 0;
-  let smoothTime = 0;
   let appliedTime = -1;
-  let raf = 0;
-  let paintRaf = 0;
 
   function updateUI(time, total) {
     const progressValue = total > 0 ? (time / total) * 100 : 0;
@@ -85,69 +78,16 @@ function initVideoScrub(root) {
     ctx.drawImage(video, offsetX, offsetY, drawWidth, drawHeight);
   }
 
-  function schedulePaint() {
-    if (!canvas || !unlocked) return;
-
-    if (paintRaf) {
-      window.cancelAnimationFrame(paintRaf);
-    }
-
-    paintRaf = window.requestAnimationFrame(() => {
-      paintRaf = window.requestAnimationFrame(() => {
-        paintRaf = 0;
-        paintFrame();
-      });
-    });
-  }
-
-  function scheduleTick() {
-    if (!raf) {
-      raf = window.requestAnimationFrame(tick);
-    }
-  }
-
   function commitSeek() {
     if (!unlocked) return;
 
     const duration = video.duration;
     if (!duration || !Number.isFinite(duration)) return;
-    if (video.seeking || Math.abs(smoothTime - appliedTime) < SEEK_EPSILON) return;
+    if (video.seeking || targetTime === appliedTime) return;
 
-    appliedTime = smoothTime;
+    appliedTime = targetTime;
     video.pause();
-    seekVideo(video, smoothTime);
-  }
-
-  function tick() {
-    raf = 0;
-
-    const duration = video.duration;
-    if (!duration || !Number.isFinite(duration)) return;
-
-    if (REDUCED_MOTION) {
-      smoothTime = targetTime;
-    } else {
-      const delta = targetTime - smoothTime;
-
-      if (Math.abs(delta) < STOP_EPSILON) {
-        smoothTime = targetTime;
-      } else {
-        smoothTime += delta * SMOOTHING;
-      }
-    }
-
-    updateUI(smoothTime, duration);
-
-    if (!video.seeking) {
-      commitSeek();
-    }
-
-    const stillAnimating = Math.abs(targetTime - smoothTime) >= STOP_EPSILON;
-    const seekPending = Math.abs(smoothTime - appliedTime) >= SEEK_EPSILON;
-
-    if (stillAnimating || seekPending || video.seeking) {
-      scheduleTick();
-    }
+    seekVideo(video, targetTime);
   }
 
   function setTimeFromPointer(clientX) {
@@ -160,10 +100,11 @@ function initVideoScrub(root) {
     const x = clamp((clientX - rect.left) / rect.width, 0, 1);
     const time = clamp(x * duration, 0, duration);
 
-    if (Math.abs(time - targetTime) < 0.001) return;
+    if (time === targetTime) return;
 
     targetTime = time;
-    scheduleTick();
+    updateUI(targetTime, duration);
+    commitSeek();
   }
 
   async function unlock() {
@@ -184,7 +125,7 @@ function initVideoScrub(root) {
     }
 
     seekVideo(video, targetTime || 0.001);
-    schedulePaint();
+    paintFrame();
   }
 
   function onPointerEnter(event) {
@@ -230,21 +171,18 @@ function initVideoScrub(root) {
   viewport.addEventListener("pointerleave", onPointerLeave);
 
   video.addEventListener("seeked", () => {
-    schedulePaint();
+    paintFrame();
 
     if (!unlocked) return;
 
-    if (Math.abs(smoothTime - appliedTime) >= SEEK_EPSILON) {
+    if (targetTime !== appliedTime) {
       appliedTime = -1;
       commitSeek();
     }
-
-    scheduleTick();
   });
 
   function onVideoReady() {
     targetTime = 0;
-    smoothTime = 0;
     appliedTime = -1;
     resizeCanvas();
     updateUI(0, video.duration);
@@ -262,7 +200,7 @@ function initVideoScrub(root) {
 
   window.addEventListener("resize", () => {
     resizeCanvas();
-    schedulePaint();
+    paintFrame();
   });
 }
 

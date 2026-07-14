@@ -1,6 +1,6 @@
 ---
 type: gallery
-order: 10
+order: 12
 id: galeria
 galleryLayout: slider-3
 itemsToShow: 3

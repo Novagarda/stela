@@ -1,6 +1,6 @@
 ---
 type: intro
-order: 9
+order: 11
 id: texto-sistema-grafico
 permalink: false
 tags: home-section

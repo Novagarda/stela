@@ -54,6 +54,14 @@ video:not(.video) {
     touch-action: none;
     user-select: none;
 
+    @media (hover: none) {
+      cursor: grab;
+
+      &.is-active {
+        cursor: grabbing;
+      }
+    }
+
     .video--source {
       width: 1px;
       height: 1px;
@@ -68,6 +76,25 @@ video:not(.video) {
 }
 
 .video-scrub {
+  &__poster {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+
+    @media (hover: none) {
+      display: block;
+    }
+
+    .video-wrap--scrub.is-unlocked & {
+      display: none;
+    }
+  }
+
   &__unlock {
     position: absolute;
     inset: 0;
@@ -80,12 +107,26 @@ video:not(.video) {
     margin: 0;
     padding: var(--spacing-s);
     border: 0;
-    background: color-mix(in srgb, var(--secondary) 72%, transparent);
-    color: var(--primary);
+    background: transparent;
+    color: #fff;
     font: inherit;
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-xxs);
     cursor: pointer;
     touch-action: manipulation;
+    text-align: center;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgb(0 0 0 / 0.55);
+      pointer-events: none;
+    }
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
 
     &.is-hidden,
     .video-wrap--scrub.is-unlocked & {
@@ -97,20 +138,31 @@ video:not(.video) {
     }
   }
 
-  &__unlock-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.5rem;
-    height: 3.5rem;
+  &__hint-track {
+    position: relative;
+    width: 4.5rem;
+    height: 2px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.3);
+    overflow: visible;
+  }
+
+  &__hint-thumb {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0.45rem;
+    height: 0.45rem;
     border-radius: 50%;
-    background: var(--accent);
-    font-size: var(--font-size-m);
-    line-height: 1;
+    background: #fff;
+    transform: translate(-50%, -50%);
+    animation: video-scrub-hint-slide 2.4s ease-in-out infinite;
   }
 
   &__unlock-label {
-    color: var(--muted);
+    color: rgb(255 255 255 / 0.9);
+    letter-spacing: 0.02em;
+    text-align: center;
   }
 
   &__controls {
@@ -165,19 +217,16 @@ video:not(.video) {
   &__time-unit {
     color: rgb(255 255 255 / 0.65);
   }
+}
 
-  &__hint {
-    margin: var(--spacing-xs) 0 0;
-    padding-inline: var(--spacing-s);
-    color: var(--muted);
-    font-size: var(--font-size-xxs);
-    text-align: center;
+@keyframes video-scrub-hint-slide {
+  0%,
+  100% {
+    left: 0;
+  }
 
-    @media (hover: none) {
-      &::after {
-        content: " · Desliza para recorrer";
-      }
-    }
+  50% {
+    left: 100%;
   }
 }
 
@@ -197,6 +246,14 @@ video:not(.video) {
     padding: 0;
     background: none;
     pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 220ms ease, visibility 220ms ease;
+  }
+
+  [data-video-scrub]:has(.video-wrap--scrub.is-unlocked) .video-scrub__controls {
+    opacity: 1;
+    visibility: visible;
   }
 
   .video-scrub__progress {
@@ -222,5 +279,32 @@ video:not(.video) {
 
   .block-slider-3 {
     margin-top: var(--spacing-xl);
+
+    .item {
+      position: relative;
+    }
+
+    .item-caption--overlay {
+      position: absolute;
+      top: var(--spacing-s);
+      left: var(--spacing-s);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15em;
+      max-width: calc(100% - 2 * var(--spacing-s));
+      pointer-events: none;
+      color: #fff;
+      mix-blend-mode: difference;
+      font-family: var(--font-sans);
+      font-size: var(--font-size-xxs);
+      line-height: var(--line-height-sans);
+      letter-spacing: 0.02em;
+    }
+
+    .item-caption__label,
+    .item-caption__text {
+      display: block;
+    }
   }
 }

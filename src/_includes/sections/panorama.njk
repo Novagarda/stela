@@ -21,15 +21,26 @@
         muted
         preload="auto"
       ></video>
+      {% if section.data.poster %}
+      <img
+        class="video-scrub__poster"
+        src="{{ section.data.poster | url }}"
+        alt=""
+        aria-hidden="true"
+        data-video-scrub-poster
+      >
+      {% endif %}
       <canvas class="video video--canvas" data-video-scrub-canvas aria-hidden="true"></canvas>
       <button
         type="button"
         class="video-scrub__unlock"
         data-video-scrub-unlock
-        aria-label="{{ section.data.unlockLabel or 'Toca para explorar el autobús' }}"
+        aria-label="{{ section.data.unlockLabel or 'Desliza para explorar el autobús' }}"
       >
-        <span class="video-scrub__unlock-icon" aria-hidden="true">▶</span>
-        <span class="video-scrub__unlock-label">{{ section.data.unlockLabel or "Toca para explorar" }}</span>
+        <span class="video-scrub__hint-track" aria-hidden="true">
+          <span class="video-scrub__hint-thumb"></span>
+        </span>
+        <span class="video-scrub__unlock-label">{{ section.data.unlockLabel or "Desliza para explorar" }}</span>
       </button>
     </div>
     <div class="video-scrub__controls" aria-hidden="true">
@@ -52,30 +63,29 @@
         data-items="{{ itemsToShow }}"
         class="inner slider slider-js{% if section.data.items | length <= 1 %} slider--single{% endif %} --ratio-{{ ratio }}"
         data-slider-no-arrows="true"
+        data-slider-dots="true"
       >
         {% for item in section.data.items %}
           <div class="slide">
             <div class="item">
               {% if item.src %}
-                <div class="image">
-                  <picture{% if item.aspect %} style="--aspect: {{ item.aspect }}"{% endif %}>
-                    <img
-                      src="{{ item.src | url }}"
-                      alt="{{ item.alt }}"
-                      loading="eager"
-                      decoding="async"
-                    />
-                  </picture>
-                </div>
+                {% include "components/slider-image.njk" %}
               {% else %}
                 <div class="image image--placeholder" role="img" aria-label="{{ item.alt }}"></div>
               {% endif %}
+              {% if section.data.showCaptions and (item.label or item.caption) %}
+                <div class="item-caption item-caption--overlay">
+                  {% if item.label %}<span class="item-caption__label">{{ item.label }}</span>{% endif %}
+                  {% if item.caption %}<span class="item-caption__text">{{ item.caption }}</span>{% endif %}
+                </div>
+              {% endif %}
             </div>
-            {% if item.caption %}
-              <div class="item-caption">{{ item.caption }}</div>
-            {% endif %}
           </div>
         {% endfor %}
+        <div class="slider-controls" data-slider-controls>
+          <div class="slider-controls__dots" data-slider-controls-dots></div>
+          <div class="slider-controls__arrows" data-slider-controls-arrows></div>
+        </div>
       </div>
     </div>
   {% endif %}

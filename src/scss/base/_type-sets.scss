@@ -70,6 +70,10 @@
 @mixin type-body {
   font-size: var(--font-size-s);
   line-height: var(--line-height-body);
+
+  @include media-breakpoint-down(sm) {
+    font-size: var(--font-size-xs);
+  }
 }
 
 .--type-body {

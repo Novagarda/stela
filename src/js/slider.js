@@ -1,4 +1,5 @@
 import Flickity from "flickity";
+import "flickity-fade";
 
 function handlerCaption(flkty, caption) {
   if (!caption) return;
@@ -40,6 +41,11 @@ function initSlider(slider) {
   const isMultiSlider = itemsToShow > 1;
   const noArrows =
     slider.dataset.sliderNoArrows === "1" || slider.dataset.sliderNoArrows === "true";
+  const fade =
+    slider.dataset.sliderFade === "1" || slider.dataset.sliderFade === "true";
+  const pageDots =
+    !isSingleSlide &&
+    (slider.dataset.sliderDots === "1" || slider.dataset.sliderDots === "true");
 
   if (isSingleSlide) {
     slider.classList.add("slider--single");
@@ -47,16 +53,50 @@ function initSlider(slider) {
 
   const flkty = new Flickity(slider, {
     cellSelector: ".slide",
-    pageDots: false,
+    pageDots,
     prevNextButtons: !noArrows && !isSingleSlide,
     cellAlign: "center",
     wrapAround: !isSingleSlide,
     draggable: !isSingleSlide,
-    speed: 500,
+    fade,
+    speed: fade ? 0 : 500,
+    selectedAttraction: fade ? 1 : 0.025,
+    friction: fade ? 1 : 0.28,
     adaptiveHeight: false,
     lazyLoad: 1,
     imagesLoaded: true,
   });
+
+  // Fade: jump opacity instantly (no crossfade settle / no drag tween)
+  if (fade) {
+    const select = flkty.select.bind(flkty);
+    flkty.select = (index, isWrap) => select(index, isWrap, true);
+    flkty.fadeSlides = function fadeSlidesHardCut() {
+      this.slides.forEach((slide, i) => {
+        slide.setOpacity(i === this.selectedIndex ? 1 : 0);
+      });
+    };
+  }
+
+  // Place dots (left) and arrows (right) into the controls bar, below the image
+  const controls = slider.querySelector("[data-slider-controls]");
+  const controlsDots = slider.querySelector("[data-slider-controls-dots]");
+  const controlsArrows = slider.querySelector("[data-slider-controls-arrows]");
+  if (controls) {
+    const dots = slider.querySelector(".flickity-page-dots");
+    const prev = slider.querySelector(".flickity-prev-next-button.previous");
+    const next = slider.querySelector(".flickity-prev-next-button.next");
+    if (dots && controlsDots) controlsDots.append(dots);
+    if (prev && controlsArrows) controlsArrows.append(prev);
+    if (next && controlsArrows) controlsArrows.append(next);
+    if (!dots && !prev && !next) {
+      controls.hidden = true;
+    } else {
+      // Ensure controls sit under the viewport (Flickity appends viewport after them)
+      const viewport = slider.querySelector(".flickity-viewport");
+      if (viewport) viewport.after(controls);
+    }
+  }
 
   const updateStatus = () => {
     if (
@@ -69,7 +109,7 @@ function initSlider(slider) {
       return;
     }
 
-    if (!isSingleSlide && carouselStatus) {
+    if (!isSingleSlide && carouselStatus && !pageDots) {
       const slideNumber = flkty.selectedIndex + 1;
       carouselStatus.textContent = `(${slideNumber}/${flkty.slides.length})`;
     } else if (carouselStatus) {
@@ -78,7 +118,7 @@ function initSlider(slider) {
 
     handlerCaption(flkty, caption);
 
-    if (isSingleSlide && sliderBottom) {
+    if (sliderBottom && (isSingleSlide || pageDots)) {
       const hasCaption =
         caption &&
         caption.style.display !== "none" &&

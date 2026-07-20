@@ -7,10 +7,7 @@ export default {
     pathPrefix !== "/"
       ? `https://novagarda.github.io${pathPrefix.replace(/\/$/, "")}/`
       : "http://localhost:8080/",
-  navigation: [
-    { label: "Mapa", id: "mapa" },
-    { label: "Liñas", id: "descargables" },
-  ],
+  navigation: [],
   footer: {
     concello: {
       name: "Concello de Santiago de Compostela",
@@ -18,38 +15,29 @@ export default {
     },
     contact: {
       address: [
-        "Rúa Cara Campomaior s/n",
+        "Rúa Clara Campoamor s/n",
         "15702 Santiago de Compostela",
       ],
       email: "mobilidade@stela.gal",
-      phone: "+34 981 588 210",
+      phone: "+34 981 568 210",
     },
     legal: [
       { label: "Aviso legal", href: "/aviso-legal/" },
       { label: "Créditos", href: "/creditos/" },
     ],
     copyright: "©{{ year }}",
-    languages: [
-      { label: "Galego", href: "/", code: "gl", active: true },
-      { label: "Español", href: "/es/", code: "es" },
-      { label: "English", href: "/en/", code: "en" },
-    ],
     social: [
       {
         label: "Instagram",
         href: "https://www.instagram.com/concellosantiago/",
       },
       {
-        label: "Youtube",
-        href: "https://www.youtube.com/channel/UCSrcC2UgDHIb80vVVRtvoDw",
-      },
-      {
         label: "Facebook",
         href: "https://www.facebook.com/concellosantiago/",
       },
       {
-        label: "X",
-        href: "https://x.com/pazoderaxoi",
+        label: "Bluesky",
+        href: "https://bsky.app/profile/concellosantiago.bsky.social",
       },
     ],
   },

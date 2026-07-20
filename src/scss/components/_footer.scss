@@ -23,7 +23,7 @@
     padding: var(--spacing-xl) var(--spacing-s) var(--spacing-xxl);
 
     @include media-breakpoint-up(md) {
-      grid-template-columns: minmax(5rem, auto) repeat(4, minmax(0, 1fr));
+      grid-template-columns: minmax(5rem, 2fr) repeat(3, minmax(0, 1fr));
       align-items: start;
       gap: var(--spacing-m);
       padding-block: var(--spacing-xxl);
@@ -50,6 +50,7 @@
     width: auto;
     max-width: 4.9rem;
     height: auto;
+    filter: brightness(0) invert(1);
   }
 
   &__contact {

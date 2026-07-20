@@ -1,15 +1,18 @@
 .section {
   width: 100%;
   padding-block: var(--spacing-xl);
-  padding-inline: var(--spacing-s);
+  padding-inline: 0;
 
   &__inner {
-    width: 100%;
+    margin-inline: var(--spacing-s);
   }
 
   &__header {
-    padding-inline: var(--spacing-s);
     margin-bottom: var(--spacing-m);
+    margin-inline: var(--spacing-s);
+    border-top: 1px solid var(--border);
+    padding-top: var(--spacing-xs);
+    font-size: var(--font-size-m);
   }
 
   &__lead {
@@ -18,23 +21,21 @@
     @include type-body;
   }
 
-  &--intro {
-    .prose {
-      margin-top: 0;
-      max-width: 52rem;
-      @include type-body;
-
-      p+p {
-        margin-top: var(--spacing-m);
-      }
-    }
-  }
-
-  &--prose {
-    // marker class for prose sections
+  &--video {
+    padding-block-start: var(--spacing-s);
   }
 
   &--bus {
-    padding-block: 0;
+    padding-block: var(--spacing-xl);
+    overflow: hidden;
   }
+
+  &--identidade,
+  &--iconas,
+  &--sinais,
+  &--vehiculos,
+  &--aplicacions {
+    overflow: hidden;
+  }
+
 }

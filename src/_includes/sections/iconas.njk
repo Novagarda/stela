@@ -1,0 +1,57 @@
+{% set itemsToShow = section.data.itemsToShow or 1 %}
+{% set ratio = section.data.ratio or "original" %}
+
+<section class="section section--iconas"{% if section.data.id %} id="{{ section.data.id }}"{% endif %}>
+  <div class="section__header">
+    {% if section.data.title %}<h2>{{ section.data.title }}</h2>{% endif %}
+  </div>
+
+  <div class="block block-slider">
+    <div
+      data-items="{{ itemsToShow }}"
+      data-slider-fade="true"
+      data-slider-dots="true"
+      class="inner slider slider-js{% if section.data.items | length <= 1 %} slider--single{% endif %} --ratio-{{ ratio }}"
+      {% if section.data.noArrows %}data-slider-no-arrows="true"{% endif %}
+    >
+      {% for item in section.data.items %}
+        <div class="slide">
+          <div class="item">
+            {% if item.src %}
+              <div class="image">
+                <picture{% if item.aspect %} style="--aspect: {{ item.aspect }}"{% endif %}>
+                  <img
+                    src="{{ item.src | url }}"
+                    alt="{{ item.alt }}"
+                    loading="eager"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+            {% else %}
+              <div class="image image--placeholder" role="img" aria-label="{{ item.alt }}"></div>
+            {% endif %}
+          </div>
+          {% if item.caption %}
+            <div class="item-caption">{{ item.caption }}</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <div class="slider-controls" data-slider-controls>
+        <div class="slider-controls__dots" data-slider-controls-dots></div>
+        <div class="slider-controls__arrows" data-slider-controls-arrows></div>
+      </div>
+      <div class="slider-bottom">
+        <div class="slider-caption"></div>
+        <div class="slider-pagination"></div>
+      </div>
+    </div>
+  </div>
+
+  {% if section.templateContent %}
+    <div class="prose">
+      {{ section.templateContent | safe }}
+    </div>
+  {% endif %}
+</section>
+<script type="module" src="{{ '/assets/js/slider.js' | url }}"></script>

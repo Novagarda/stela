@@ -21,9 +21,21 @@ video:not(.video) {
   }
 
   &--player {
-    aspect-ratio: auto;
-    overflow: visible;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
     background: #000;
+
+    .plyr,
+    .plyr__video-embed {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .plyr {
+      --plyr-color-main: var(--accent);
+    }
 
     .video {
       position: static;
@@ -173,6 +185,7 @@ video:not(.video) {
   [data-video-scrub] {
     display: flex;
     flex-direction: column;
+    margin-inline: var(--spacing-s);
   }
 
   .video-wrap--scrub {
@@ -205,5 +218,9 @@ video:not(.video) {
 
   .video-scrub__time {
     display: none;
+  }
+
+  .block-slider-3 {
+    margin-top: var(--spacing-xl);
   }
 }

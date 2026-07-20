@@ -1,13 +1,10 @@
 .prose {
-  margin-top: var(--spacing-l);
-  font-size: var(--font-size-xs);
+  margin-inline: var(--spacing-s);
+  max-width: 52rem;
+  @include type-body;
 
-  p {
-    margin-bottom: var(--spacing-s);
-
-    &:last-child {
-      margin-bottom: 0;
-    }
+  p + p {
+    margin-top: var(--spacing-m);
   }
 
   h2,
@@ -32,6 +29,12 @@
   ol {
     padding-left: var(--spacing-m);
   }
+}
+
+// Text after a gallery
+.block-slider-3 + .prose,
+.block-slider + .prose {
+  margin-top: var(--spacing-m);
 }
 
 code {

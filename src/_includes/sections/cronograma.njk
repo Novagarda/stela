@@ -1,0 +1,14 @@
+<section class="section section--cronograma"{% if section.data.id %} id="{{ section.data.id }}"{% endif %}>
+  <div class="section__header">
+    {% if section.data.title %}<h2>{{ section.data.title }}</h2>{% endif %}
+  </div>
+
+  <ol class="cronograma">
+    {% for item in section.data.items %}
+      <li class="cronograma__item">
+        <time class="cronograma__date"{% if item.datetime %} datetime="{{ item.datetime }}"{% endif %}>{{ item.date }}</time>
+        <p class="cronograma__text">{{ item.text }}</p>
+      </li>
+    {% endfor %}
+  </ol>
+</section>

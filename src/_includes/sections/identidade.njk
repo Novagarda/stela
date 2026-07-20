@@ -1,0 +1,61 @@
+{% set itemsToShow = section.data.itemsToShow or 3 %}
+{% set ratio = section.data.ratio or "original" %}
+
+<section class="section section--identidade"{% if section.data.id %} id="{{ section.data.id }}"{% endif %}>
+  <div class="section__header">
+    {% if section.data.title %}<h2>{{ section.data.title }}</h2>{% endif %}
+  </div>
+
+  <div class="block block-slider-3">
+    <div
+      data-items="{{ itemsToShow }}"
+      class="inner slider slider-js{% if section.data.items | length <= 1 %} slider--single{% endif %} --ratio-{{ ratio }}"
+      data-slider-no-arrows="true"
+    >
+      {% for item in section.data.items %}
+        <div class="slide">
+          <div class="item">
+            {% if item.src %}
+              <div class="image">
+                <picture{% if item.aspect %} style="--aspect: {{ item.aspect }}"{% endif %}>
+                  <img
+                    src="{{ item.src | url }}"
+                    alt="{{ item.alt }}"
+                    loading="eager"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+            {% else %}
+              <div class="image image--placeholder" role="img" aria-label="{{ item.alt }}"></div>
+            {% endif %}
+          </div>
+          {% if item.caption %}
+            <div class="item-caption">{{ item.caption }}</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if section.templateContent or section.data.href %}
+    <div class="identidade__footer">
+      {% if section.templateContent %}
+        <div class="prose">
+          {{ section.templateContent | safe }}
+        </div>
+      {% endif %}
+      {% if section.data.href %}
+        <a
+          class="identidade__cta"
+          href="{{ section.data.href | url }}"
+          target="_blank"
+          rel="noopener"
+        >
+          {{ section.data.label or "Descarga o Manual de Identidade" }}
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+<script type="module" src="{{ '/assets/js/slider.js' | url }}"></script>

@@ -5,19 +5,15 @@
     {% if section.data.lead %}<p class="section__lead">{{ section.data.lead }}</p>{% endif %}
   </div>
   {% endif %}
-  <div class="video-wrap video-wrap--player" data-video-viewport>
-    <video
-      class="video"
-      src="{{ section.data.src | url }}"
-      {% if section.data.controls %}controls{% endif %}
-      {% if section.data.playsinline %}playsinline{% endif %}
-      {% if section.data.preload %}preload="{{ section.data.preload }}"{% endif %}
-      {% if section.data.autoplay %}autoplay{% endif %}
-      {% if section.data.loop %}loop{% endif %}
-      {% if section.data.muted %}muted{% endif %}
-    >
-      {{ section.data.fallback or "Tu navegador no soporta la reproducción de vídeo." }}
-    </video>
+  <div class="section__inner">
+    <div class="video-wrap video-wrap--player">
+      <div
+        class="plyr__video-embed"
+        data-plyr
+        data-plyr-provider="youtube"
+        data-plyr-embed-id="{{ section.data.youtube }}"
+      ></div>
+    </div>
   </div>
 </section>
 <script type="module" src="{{ '/assets/js/video.js' | url }}"></script>

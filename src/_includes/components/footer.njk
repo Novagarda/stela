@@ -1,13 +1,19 @@
 <footer class="site-footer">
   <div class="site-footer__band">
-    <img
-      class="site-footer__band-image"
-      src="{{ '/assets/images/footer-band-stela.svg' | url }}"
-      alt="Stela"
-      width="1400"
-      height="84"
-      decoding="async"
-    />
+    <picture>
+      <source
+        media="(max-width: 767.98px)"
+        srcset="{{ '/assets/images/footer-band-stela-mobile.svg' | url }}"
+      />
+      <img
+        class="site-footer__band-image"
+        src="{{ '/assets/images/footer-band-stela.svg' | url }}"
+        alt="Stela"
+        width="1400"
+        height="84"
+        decoding="async"
+      />
+    </picture>
   </div>
 
   <div class="site-footer__inner">
@@ -30,18 +36,23 @@
       </a>
     </div>
 
-    <div class="site-footer__col site-footer__col--contact">
-      <address class="site-footer__contact">
-        {% for line in site.footer.contact.address %}
-          <span class="site-footer__contact-line">{{ line }}</span>
-        {% endfor %}
-        <a class="site-footer__link" href="mailto:{{ site.footer.contact.email }}">
-          {{ site.footer.contact.email }}
-        </a>
-        <a class="site-footer__link" href="tel:{{ site.footer.contact.phone | replace(' ', '') }}">
-          {{ site.footer.contact.phone }}
-        </a>
-      </address>
+    <div class="site-footer__col site-footer__col--social">
+      <nav class="site-footer__nav" aria-label="Redes sociais">
+        <ul class="site-footer__list">
+          {% for link in site.footer.social %}
+            <li class="site-footer__list-item">
+              <a
+                class="site-footer__link"
+                href="{{ link.href }}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
     </div>
 
     <div class="site-footer__col site-footer__col--legal">
@@ -66,42 +77,18 @@
       </nav>
     </div>
 
-    <div class="site-footer__col site-footer__col--lang">
-      <nav class="site-footer__nav" aria-label="Idioma">
-        <ul class="site-footer__list">
-          {% for lang in site.footer.languages %}
-            <li class="site-footer__list-item">
-              <a
-                class="site-footer__link{% if lang.active %} is-active{% endif %}"
-                href="{{ lang.href | url }}"
-                {% if lang.code %}hreflang="{{ lang.code }}"{% endif %}
-                {% if lang.active %}aria-current="true"{% endif %}
-              >
-                {{ lang.label }}
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
-      </nav>
-    </div>
-
-    <div class="site-footer__col site-footer__col--social">
-      <nav class="site-footer__nav" aria-label="Redes sociais">
-        <ul class="site-footer__list">
-          {% for link in site.footer.social %}
-            <li class="site-footer__list-item">
-              <a
-                class="site-footer__link"
-                href="{{ link.href }}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {{ link.label }}
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
-      </nav>
+    <div class="site-footer__col site-footer__col--contact">
+      <address class="site-footer__contact">
+        {% for line in site.footer.contact.address %}
+          <span class="site-footer__contact-line">{{ line }}</span>
+        {% endfor %}
+        <a class="site-footer__link" href="mailto:{{ site.footer.contact.email }}">
+          {{ site.footer.contact.email }}
+        </a>
+        <a class="site-footer__link" href="tel:{{ site.footer.contact.phone | replace(' ', '') }}">
+          {{ site.footer.contact.phone }}
+        </a>
+      </address>
     </div>
   </div>
 </footer>

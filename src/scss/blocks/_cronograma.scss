@@ -1,0 +1,30 @@
+.cronograma {
+  list-style: none;
+  margin: 0;
+  margin-inline: var(--spacing-s);
+  padding: 0;
+  @include type-body;
+
+  &__item {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: var(--spacing-m);
+    padding-block: var(--spacing-s);
+    border-top: 1px solid var(--border);
+
+    @include media-breakpoint-up(md) {
+      grid-template-columns: 6.5rem 1fr;
+      gap: var(--spacing-l);
+    }
+  }
+
+  &__date {
+    display: block;
+    white-space: nowrap;
+  }
+
+  &__text {
+    margin: 0;
+    max-width: 42rem;
+  }
+}

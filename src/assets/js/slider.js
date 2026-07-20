@@ -2271,8 +2271,198 @@ var require_js = __commonJS({
   }
 });
 
+// node_modules/flickity-fade/flickity-fade.js
+var require_flickity_fade = __commonJS({
+  "node_modules/flickity-fade/flickity-fade.js"(exports, module) {
+    (function(window2, factory) {
+      if (typeof module == "object" && module.exports) {
+        module.exports = factory(
+          require_js(),
+          require_utils()
+        );
+      } else {
+        factory(
+          window2.Flickity,
+          window2.fizzyUIUtils
+        );
+      }
+    })(typeof window != "undefined" ? window : exports, function factory(Flickity2, utils) {
+      let Slide = Flickity2.Slide;
+      Slide.prototype.renderFadePosition = function() {
+      };
+      Slide.prototype.setOpacity = function(alpha) {
+        this.cells.forEach((cell) => {
+          cell.element.style.opacity = alpha;
+        });
+      };
+      Flickity2.create.fade = function() {
+        this.fadeIndex = this.selectedIndex;
+        this.prevSelectedIndex = this.selectedIndex;
+        this.on("select", this.onSelectFade);
+        this.on("dragEnd", this.onDragEndFade);
+        this.on("settle", this.onSettleFade);
+        this.on("activate", this.onActivateFade);
+        this.on("deactivate", this.onDeactivateFade);
+      };
+      let proto = Flickity2.prototype;
+      let updateSlides = proto.updateSlides;
+      proto.updateSlides = function() {
+        updateSlides.apply(this, arguments);
+        if (!this.options.fade) return;
+        this.slides.forEach((slide, i) => {
+          let slideTargetX = slide.target - slide.x;
+          let firstCellX = slide.cells[0].x;
+          slide.cells.forEach((cell) => {
+            let targetX = cell.x - firstCellX - slideTargetX;
+            this._renderCellPosition(cell, targetX);
+          });
+          let alpha = i === this.selectedIndex ? 1 : 0;
+          slide.setOpacity(alpha);
+        });
+      };
+      proto.onSelectFade = function() {
+        this.fadeIndex = Math.min(this.prevSelectedIndex, this.slides.length - 1);
+        this.prevSelectedIndex = this.selectedIndex;
+      };
+      proto.onSettleFade = function() {
+        delete this.didDragEnd;
+        if (!this.options.fade) return;
+        this.selectedSlide.setOpacity(1);
+        let fadedSlide = this.slides[this.fadeIndex];
+        if (fadedSlide && this.fadeIndex !== this.selectedIndex) {
+          this.slides[this.fadeIndex].setOpacity(0);
+        }
+      };
+      proto.onDragEndFade = function() {
+        this.didDragEnd = true;
+      };
+      proto.onActivateFade = function() {
+        if (this.options.fade) {
+          this.element.classList.add("is-fade");
+        }
+      };
+      proto.onDeactivateFade = function() {
+        if (!this.options.fade) return;
+        this.element.classList.remove("is-fade");
+        this.slides.forEach((slide) => {
+          slide.setOpacity("");
+        });
+      };
+      let positionSlider = proto.positionSlider;
+      proto.positionSlider = function() {
+        if (!this.options.fade) {
+          positionSlider.apply(this, arguments);
+          return;
+        }
+        this.fadeSlides();
+        this.dispatchScrollEvent();
+      };
+      let positionSliderAtSelected = proto.positionSliderAtSelected;
+      proto.positionSliderAtSelected = function() {
+        if (this.options.fade) {
+          this.setTranslateX(0);
+        }
+        positionSliderAtSelected.apply(this, arguments);
+      };
+      proto.fadeSlides = function() {
+        if (this.slides.length < 2) return;
+        let indexes = this.getFadeIndexes();
+        let fadeSlideA = this.slides[indexes.a];
+        let fadeSlideB = this.slides[indexes.b];
+        let distance = this.wrapDifference(fadeSlideA.target, fadeSlideB.target);
+        let progress = this.wrapDifference(fadeSlideA.target, -this.x);
+        progress /= distance;
+        fadeSlideA.setOpacity(1 - progress);
+        fadeSlideB.setOpacity(progress);
+        let fadeHideIndex = indexes.a;
+        if (this.isDragging) {
+          fadeHideIndex = progress > 0.5 ? indexes.a : indexes.b;
+        }
+        let isNewHideIndex = this.fadeHideIndex !== void 0 && this.fadeHideIndex !== fadeHideIndex && this.fadeHideIndex !== indexes.a && this.fadeHideIndex !== indexes.b;
+        if (isNewHideIndex) {
+          this.slides[this.fadeHideIndex].setOpacity(0);
+        }
+        this.fadeHideIndex = fadeHideIndex;
+      };
+      proto.getFadeIndexes = function() {
+        if (!this.isDragging && !this.didDragEnd) {
+          return {
+            a: this.fadeIndex,
+            b: this.selectedIndex
+          };
+        }
+        if (this.options.wrapAround) {
+          return this.getFadeDragWrapIndexes();
+        } else {
+          return this.getFadeDragLimitIndexes();
+        }
+      };
+      proto.getFadeDragWrapIndexes = function() {
+        let distances = this.slides.map(function(slide, i) {
+          return this.getSlideDistance(-this.x, i);
+        }, this);
+        let absDistances = distances.map(function(distance2) {
+          return Math.abs(distance2);
+        });
+        let minDistance = Math.min(...absDistances);
+        let closestIndex = absDistances.indexOf(minDistance);
+        let distance = distances[closestIndex];
+        let len = this.slides.length;
+        let delta = distance >= 0 ? 1 : -1;
+        return {
+          a: closestIndex,
+          b: utils.modulo(closestIndex + delta, len)
+        };
+      };
+      proto.getFadeDragLimitIndexes = function() {
+        let dragIndex = 0;
+        for (let i = 0; i < this.slides.length - 1; i++) {
+          let slide = this.slides[i];
+          if (-this.x < slide.target) {
+            break;
+          }
+          dragIndex = i;
+        }
+        return {
+          a: dragIndex,
+          b: dragIndex + 1
+        };
+      };
+      proto.wrapDifference = function(a, b) {
+        let diff = b - a;
+        if (!this.options.wrapAround) return diff;
+        let diffPlus = diff + this.slideableWidth;
+        let diffMinus = diff - this.slideableWidth;
+        if (Math.abs(diffPlus) < Math.abs(diff)) {
+          diff = diffPlus;
+        }
+        if (Math.abs(diffMinus) < Math.abs(diff)) {
+          diff = diffMinus;
+        }
+        return diff;
+      };
+      let _updateWrapShiftCells = proto._updateWrapShiftCells;
+      proto._updateWrapShiftCells = function() {
+        if (this.options.fade) {
+          this.isWrapping = this.getIsWrapping();
+        } else {
+          _updateWrapShiftCells.apply(this, arguments);
+        }
+      };
+      let shiftWrapCells = proto.shiftWrapCells;
+      proto.shiftWrapCells = function() {
+        if (!this.options.fade) {
+          shiftWrapCells.apply(this, arguments);
+        }
+      };
+      return Flickity2;
+    });
+  }
+});
+
 // src/js/slider.js
 var import_flickity = __toESM(require_js(), 1);
+var import_flickity_fade = __toESM(require_flickity_fade(), 1);
 function handlerCaption(flkty, caption) {
   if (!caption) return;
   const slide = flkty.selectedSlide;
@@ -2306,34 +2496,65 @@ function initSlider(slider) {
   const itemsToShow = Number.parseInt(slider.dataset.items, 10) || 1;
   const isMultiSlider = itemsToShow > 1;
   const noArrows = slider.dataset.sliderNoArrows === "1" || slider.dataset.sliderNoArrows === "true";
+  const fade = slider.dataset.sliderFade === "1" || slider.dataset.sliderFade === "true";
+  const pageDots = !isSingleSlide && (slider.dataset.sliderDots === "1" || slider.dataset.sliderDots === "true");
   if (isSingleSlide) {
     slider.classList.add("slider--single");
   }
   const flkty = new import_flickity.default(slider, {
     cellSelector: ".slide",
-    pageDots: false,
+    pageDots,
     prevNextButtons: !noArrows && !isSingleSlide,
     cellAlign: "center",
     wrapAround: !isSingleSlide,
     draggable: !isSingleSlide,
-    speed: 500,
+    fade,
+    speed: fade ? 0 : 500,
+    selectedAttraction: fade ? 1 : 0.025,
+    friction: fade ? 1 : 0.28,
     adaptiveHeight: false,
     lazyLoad: 1,
     imagesLoaded: true
   });
+  if (fade) {
+    const select = flkty.select.bind(flkty);
+    flkty.select = (index, isWrap) => select(index, isWrap, true);
+    flkty.fadeSlides = function fadeSlidesHardCut() {
+      this.slides.forEach((slide, i) => {
+        slide.setOpacity(i === this.selectedIndex ? 1 : 0);
+      });
+    };
+  }
+  const controls = slider.querySelector("[data-slider-controls]");
+  const controlsDots = slider.querySelector("[data-slider-controls-dots]");
+  const controlsArrows = slider.querySelector("[data-slider-controls-arrows]");
+  if (controls) {
+    const dots = slider.querySelector(".flickity-page-dots");
+    const prev = slider.querySelector(".flickity-prev-next-button.previous");
+    const next = slider.querySelector(".flickity-prev-next-button.next");
+    if (dots && controlsDots) controlsDots.append(dots);
+    if (prev && controlsArrows) controlsArrows.append(prev);
+    if (next && controlsArrows) controlsArrows.append(next);
+    if (!dots && !prev && !next) {
+      controls.hidden = true;
+    } else {
+      const viewport = slider.querySelector(".flickity-viewport");
+      if (viewport) viewport.after(controls);
+    }
+  }
   const updateStatus = () => {
     if (!flkty || flkty.selectedIndex == null || !flkty.slides?.length || !flkty.cells?.length) {
       if (carouselStatus) carouselStatus.textContent = "";
       return;
     }
-    if (!isSingleSlide && carouselStatus) {
+    if (!isSingleSlide && carouselStatus && !pageDots) {
       const slideNumber = flkty.selectedIndex + 1;
       carouselStatus.textContent = `(${slideNumber}/${flkty.slides.length})`;
     } else if (carouselStatus) {
       carouselStatus.textContent = "";
     }
     handlerCaption(flkty, caption);
-    if (isSingleSlide && sliderBottom) {
+    if (sliderBottom && (isSingleSlide || pageDots)) {
       const hasCaption = caption && caption.style.display !== "none" && caption.textContent.trim() !== "";
       sliderBottom.style.display = hasCaption ? "" : "none";
     }

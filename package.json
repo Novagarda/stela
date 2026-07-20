@@ -7,10 +7,10 @@
     "node": ">=22"
   },
   "scripts": {
-    "css:build": "cp node_modules/flickity/dist/flickity.css src/assets/css/flickity.css && sass src/scss/styles.scss src/assets/css/style.css --style=expanded --load-path=node_modules",
-    "css:watch": "cp node_modules/flickity/dist/flickity.css src/assets/css/flickity.css && sass src/scss/styles.scss src/assets/css/style.css --watch --style=expanded --load-path=node_modules",
-    "js:build": "esbuild src/js/slider.js --bundle --outfile=src/assets/js/slider.js --format=esm",
-    "js:watch": "esbuild src/js/slider.js --bundle --outfile=src/assets/js/slider.js --format=esm --watch",
+    "css:build": "cp node_modules/flickity/dist/flickity.css src/assets/css/flickity.css && cp node_modules/plyr/dist/plyr.css src/assets/css/plyr.css && sass src/scss/styles.scss src/assets/css/style.css --style=expanded --load-path=node_modules",
+    "css:watch": "cp node_modules/flickity/dist/flickity.css src/assets/css/flickity.css && cp node_modules/plyr/dist/plyr.css src/assets/css/plyr.css && sass src/scss/styles.scss src/assets/css/style.css --watch --style=expanded --load-path=node_modules",
+    "js:build": "esbuild src/js/slider.js src/js/video.js --bundle --outdir=src/assets/js --format=esm",
+    "js:watch": "esbuild src/js/slider.js src/js/video.js --bundle --outdir=src/assets/js --format=esm --watch",
     "dev": "concurrently -k \"npm run css:watch\" \"npm run js:watch\" \"eleventy --serve\"",
     "build": "npm run css:build && npm run js:build && eleventy",
     "build:pages": "npm run css:build && npm run js:build && ELEVENTY_PATH_PREFIX=/stela/ eleventy",
@@ -21,6 +21,10 @@
     "concurrently": "^9.2.0",
     "esbuild": "^0.28.1",
     "flickity": "^3.0.0",
+    "plyr": "^3.8.4",
     "sass": "^1.89.2"
+  },
+  "dependencies": {
+    "flickity-fade": "^2.0.0"
   }
 }

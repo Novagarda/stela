@@ -11,21 +11,13 @@
       data-items="{{ itemsToShow }}"
       class="inner slider slider-js{% if section.data.items | length <= 1 %} slider--single{% endif %} --ratio-{{ ratio }}"
       data-slider-no-arrows="true"
+      data-slider-dots="true"
     >
       {% for item in section.data.items %}
         <div class="slide">
           <div class="item">
             {% if item.src %}
-              <div class="image">
-                <picture{% if item.aspect %} style="--aspect: {{ item.aspect }}"{% endif %}>
-                  <img
-                    src="{{ item.src | url }}"
-                    alt="{{ item.alt }}"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
+              {% include "components/slider-image.njk" %}
             {% else %}
               <div class="image image--placeholder" role="img" aria-label="{{ item.alt }}"></div>
             {% endif %}
@@ -35,6 +27,10 @@
           {% endif %}
         </div>
       {% endfor %}
+      <div class="slider-controls" data-slider-controls>
+        <div class="slider-controls__dots" data-slider-controls-dots></div>
+        <div class="slider-controls__arrows" data-slider-controls-arrows></div>
+      </div>
     </div>
   </div>
 

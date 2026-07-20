@@ -2487,6 +2487,10 @@ function handlerCaption(flkty, caption) {
     caption.style.display = "none";
   }
 }
+var MOBILE_MQ = window.matchMedia("(max-width: 767px)");
+function isSlider3Mobile(slider) {
+  return slider.closest(".block-slider-3") && MOBILE_MQ.matches;
+}
 function initSlider(slider) {
   const caption = slider.querySelector(".slider-caption");
   const carouselStatus = slider.querySelector(".slider-pagination");
@@ -2498,23 +2502,33 @@ function initSlider(slider) {
   const noArrows = slider.dataset.sliderNoArrows === "1" || slider.dataset.sliderNoArrows === "true";
   const fade = slider.dataset.sliderFade === "1" || slider.dataset.sliderFade === "true";
   const pageDots = !isSingleSlide && (slider.dataset.sliderDots === "1" || slider.dataset.sliderDots === "true");
+  const adaptiveHeight = isSlider3Mobile(slider);
   if (isSingleSlide) {
     slider.classList.add("slider--single");
   }
+  const lazyAdjacent = Math.max(itemsToShow, 1);
   const flkty = new import_flickity.default(slider, {
     cellSelector: ".slide",
     pageDots,
     prevNextButtons: !noArrows && !isSingleSlide,
     cellAlign: "center",
     wrapAround: !isSingleSlide,
+    autoPlay: isSingleSlide ? false : 4500,
     draggable: !isSingleSlide,
     fade,
     speed: fade ? 0 : 500,
     selectedAttraction: fade ? 1 : 0.025,
     friction: fade ? 1 : 0.28,
-    adaptiveHeight: false,
-    lazyLoad: 1,
+    adaptiveHeight,
+    lazyLoad: lazyAdjacent,
     imagesLoaded: true
+  });
+  flkty.on("lazyLoad", (_event, cellElem) => {
+    cellElem?.querySelector("img")?.classList.add("loaded");
+    flkty.resize();
+    if (flkty.options.adaptiveHeight) {
+      flkty.setGallerySize();
+    }
   });
   if (fade) {
     const select = flkty.select.bind(flkty);
@@ -2567,16 +2581,54 @@ function initSlider(slider) {
       nextCell.element.classList.add("next");
     }
   };
+  const syncAdaptiveHeight = () => {
+    const shouldAdapt = isSlider3Mobile(slider);
+    if (flkty.options.adaptiveHeight === shouldAdapt) return;
+    flkty.options.adaptiveHeight = shouldAdapt;
+    flkty.resize();
+    if (shouldAdapt) {
+      flkty.setGallerySize();
+    }
+  };
   updateStatus();
   flkty.on("select", updateStatus);
-  flkty.on("ready", () => flkty.resize());
-  window.addEventListener("load", () => flkty.resize());
-}
-document.querySelectorAll(".slider-js").forEach((slider) => {
-  if (!slider.classList.contains("flickity-enabled")) {
-    initSlider(slider);
+  flkty.on("ready", () => {
+    flkty.resize();
+    if (flkty.options.adaptiveHeight) {
+      flkty.setGallerySize();
+    }
+  });
+  window.addEventListener("load", () => {
+    flkty.resize();
+    if (flkty.options.adaptiveHeight) {
+      flkty.setGallerySize();
+    }
+  });
+  if (slider.closest(".block-slider-3")) {
+    MOBILE_MQ.addEventListener("change", syncAdaptiveHeight);
   }
-});
+}
+function observeSlider(slider) {
+  if (slider.classList.contains("flickity-enabled")) return;
+  const start = () => {
+    if (slider.classList.contains("flickity-enabled")) return;
+    initSlider(slider);
+  };
+  if (!("IntersectionObserver" in window)) {
+    start();
+    return;
+  }
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      observer.disconnect();
+      start();
+    },
+    { rootMargin: "200px 0px", threshold: 0.01 }
+  );
+  observer.observe(slider);
+}
+document.querySelectorAll(".slider-js").forEach(observeSlider);
 /*! Bundled license information:
 
 get-size/get-size.js:

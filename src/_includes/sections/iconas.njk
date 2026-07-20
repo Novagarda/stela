@@ -18,16 +18,7 @@
         <div class="slide">
           <div class="item">
             {% if item.src %}
-              <div class="image">
-                <picture{% if item.aspect %} style="--aspect: {{ item.aspect }}"{% endif %}>
-                  <img
-                    src="{{ item.src | url }}"
-                    alt="{{ item.alt }}"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </picture>
-              </div>
+              {% include "components/slider-image.njk" %}
             {% else %}
               <div class="image image--placeholder" role="img" aria-label="{{ item.alt }}"></div>
             {% endif %}

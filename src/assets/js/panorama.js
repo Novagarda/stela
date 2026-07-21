@@ -107,13 +107,19 @@ function initVideoScrub(root) {
     commitSeek();
   }
 
-  async function unlock() {
-    if (unlocked) return;
-
-    unlocked = true;
+  function applyUnlockedUI() {
     viewport.classList.add("is-unlocked");
     unlockBtn?.classList.add("is-hidden");
     unlockBtn?.setAttribute("aria-hidden", "true");
+    root.querySelector(".video-scrub__controls")?.setAttribute("aria-hidden", "false");
+  }
+
+  async function unlock() {
+    const needsVideoPrime = !unlocked;
+    unlocked = true;
+    applyUnlockedUI();
+
+    if (!needsVideoPrime) return;
 
     video.muted = true;
 

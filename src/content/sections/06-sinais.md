@@ -1,6 +1,6 @@
 ---
 type: sinais
-order: 4.5
+order: 6
 id: sinais
 title: Sinais
 itemsToShow: 3

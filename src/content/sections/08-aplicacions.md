@@ -1,6 +1,6 @@
 ---
 type: aplicacions
-order: 4.7
+order: 8
 id: aplicacions
 title: Aplicacións
 itemsToShow: 3

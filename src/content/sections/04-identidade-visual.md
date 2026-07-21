@@ -1,6 +1,6 @@
 ---
 type: identidade
-order: 3
+order: 4
 id: identidade-visual
 title: Identidade visual
 itemsToShow: 3

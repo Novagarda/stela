@@ -1,6 +1,6 @@
 ---
 type: vehiculos
-order: 4.6
+order: 7
 id: vehiculos
 title: Vehículos
 itemsToShow: 3

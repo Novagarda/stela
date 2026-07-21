@@ -1,6 +1,6 @@
 ---
 type: iconas
-order: 4
+order: 5
 id: iconas
 title: Iconas
 itemsToShow: 1

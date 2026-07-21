@@ -22,15 +22,47 @@ export default class Lazy {
         img.src = url;
       });
 
+    const revealImage = (image, src) => {
+      let revealed = false;
+
+      const finish = () => {
+        if (revealed) return;
+        revealed = true;
+
+        requestAnimationFrame(() => {
+          image.classList.add("loaded");
+          image.removeAttribute("data-src");
+          image.dispatchEvent(new CustomEvent("lazyloaded", { bubbles: true }));
+        });
+      };
+
+      const decode = () => {
+        if (typeof image.decode === "function") {
+          image.decode().then(finish).catch(finish);
+          return;
+        }
+        finish();
+      };
+
+      if (image.getAttribute("src") === src && image.complete) {
+        decode();
+        return;
+      }
+
+      image.addEventListener("load", decode, { once: true });
+      image.addEventListener("error", finish, { once: true });
+      image.setAttribute("src", src);
+
+      if (image.complete) {
+        decode();
+      }
+    };
+
     if (!image.classList.contains("loaded")) {
       const src = image.getAttribute("data-src");
       if (!src) return;
 
-      loadImage(src).then(() => {
-        image.setAttribute("src", src);
-        image.classList.add("loaded");
-        image.dispatchEvent(new CustomEvent("lazyloaded", { bubbles: true }));
-      });
+      loadImage(src).then(() => revealImage(image, src));
     }
 
     getSiblings(image).forEach((item) => {

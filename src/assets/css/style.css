@@ -919,6 +919,8 @@ body {
   position: relative;
   height: 100%;
   padding-top: calc(100% * var(--aspect));
+  isolation: isolate;
+  overflow: hidden;
 }
 .image img {
   position: absolute;
@@ -929,13 +931,16 @@ body {
   object-fit: contain;
   object-position: center center;
   max-height: 100vh;
-  -webkit-filter: blur(3px);
-  filter: blur(3px);
-  transition: filter 1000ms ease-out 500ms;
+  transform: scale(1.03);
+  -webkit-filter: blur(6px);
+  filter: blur(6px);
+  transition: filter 700ms ease-out, transform 700ms ease-out, -webkit-filter 700ms ease-out;
+  will-change: filter, transform;
 }
 .image img.loaded {
-  filter: none;
-  -webkit-filter: none;
+  transform: none;
+  -webkit-filter: blur(0);
+  filter: blur(0);
 }
 
 .swup-progress-bar {

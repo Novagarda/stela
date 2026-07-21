@@ -6,6 +6,9 @@ $grid-breakpoints: (xs: 0,
   xl: 1200px,
   xxl: 2000px);
 
+// Site container — fluid growth capped at xxl
+$container-max-width: 2000px;
+
 // Animation
 //
 // Default easing curves, Transitions, etc

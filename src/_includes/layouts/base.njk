@@ -23,10 +23,14 @@
       </nav>
     </header> #}
 
-    <main class="site-main">
-      {{ content | safe }}
-    </main>
+    <div class="site-container">
+      <main class="site-main">
+        {{ content | safe }}
+      </main>
 
-    {% include "components/footer.njk" %}
+      {% include "components/footer.njk" %}
+    </div>
+
+    <script type="module" src="{{ '/assets/js/lazy.js' | url }}"></script>
   </body>
 </html>

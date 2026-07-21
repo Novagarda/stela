@@ -58,9 +58,6 @@ function initSlider(slider) {
     slider.classList.add("slider--single");
   }
 
-  // Load selected cell + enough neighbors for multi-visible carousels
-  const lazyAdjacent = Math.max(itemsToShow, 1);
-
   const flkty = new Flickity(slider, {
     cellSelector: ".slide",
     pageDots,
@@ -74,12 +71,10 @@ function initSlider(slider) {
     selectedAttraction: fade ? 1 : 0.025,
     friction: fade ? 1 : 0.28,
     adaptiveHeight,
-    lazyLoad: lazyAdjacent,
     imagesLoaded: true,
   });
 
-  flkty.on("lazyLoad", (_event, cellElem) => {
-    cellElem?.querySelector("img")?.classList.add("loaded");
+  slider.addEventListener("lazyloaded", () => {
     flkty.resize();
     if (flkty.options.adaptiveHeight) {
       flkty.setGallerySize();

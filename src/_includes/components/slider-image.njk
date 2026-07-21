@@ -1,8 +1,9 @@
-{# Flickity lazyLoad: no `src` until adjacent/selected — requires slider.js #}
-<div class="image">
+<div class="image --lazy-image">
   <picture{% if item.aspect %} style="--aspect: {{ item.aspect }}"{% endif %}>
     <img
-      data-flickity-lazyload="{{ item.src | url }}"
+      class="lazy"
+      src="{{ item.src | thumbSrc | url }}"
+      data-src="{{ item.src | url }}"
       alt="{{ item.alt }}"
       decoding="async"
     />

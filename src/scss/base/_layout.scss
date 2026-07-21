@@ -2,6 +2,12 @@ body {
   transition: background-color 500ms ease;
 }
 
+.site-container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+}
+
 .main,
 .site-main {
   width: 100%;

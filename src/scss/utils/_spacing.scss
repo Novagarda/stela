@@ -1,4 +1,7 @@
 :root {
+  // Fluid growth capped at $container-max-width; width: 100% on .site-container prevents overflow
+  --container-max-width: min(#{$container-max-width}, 40rem + 50vw);
+
   --spacing-xxxs: 0.15rem;
   --spacing-xxs: 0.25rem;
   --spacing-xs: 0.6rem;

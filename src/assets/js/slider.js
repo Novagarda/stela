@@ -2506,7 +2506,6 @@ function initSlider(slider) {
   if (isSingleSlide) {
     slider.classList.add("slider--single");
   }
-  const lazyAdjacent = Math.max(itemsToShow, 1);
   const flkty = new import_flickity.default(slider, {
     cellSelector: ".slide",
     pageDots,
@@ -2520,11 +2519,9 @@ function initSlider(slider) {
     selectedAttraction: fade ? 1 : 0.025,
     friction: fade ? 1 : 0.28,
     adaptiveHeight,
-    lazyLoad: lazyAdjacent,
     imagesLoaded: true
   });
-  flkty.on("lazyLoad", (_event, cellElem) => {
-    cellElem?.querySelector("img")?.classList.add("loaded");
+  slider.addEventListener("lazyloaded", () => {
     flkty.resize();
     if (flkty.options.adaptiveHeight) {
       flkty.setGallerySize();

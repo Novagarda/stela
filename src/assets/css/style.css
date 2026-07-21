@@ -216,6 +216,7 @@ picture.img-fit img {
 }
 
 :root {
+  --container-max-width: min(2000px, 40rem + 50vw);
   --spacing-xxxs: 0.15rem;
   --spacing-xxs: 0.25rem;
   --spacing-xs: 0.6rem;
@@ -877,6 +878,12 @@ body {
   transition: background-color 500ms ease;
 }
 
+.site-container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+}
+
 .main,
 .site-main {
   width: 100%;
@@ -1500,6 +1507,7 @@ code {
   fill: currentColor;
 }
 .block-slider .image img {
+  object-fit: cover;
   filter: none;
 }
 .block-slider .flickity-page-dots {

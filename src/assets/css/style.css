@@ -931,14 +931,12 @@ body {
   object-fit: contain;
   object-position: center center;
   max-height: 100vh;
-  transform: scale(1.03);
-  -webkit-filter: blur(6px);
-  filter: blur(6px);
-  transition: filter 700ms ease-out, transform 700ms ease-out, -webkit-filter 700ms ease-out;
-  will-change: filter, transform;
+  -webkit-filter: blur(20px);
+  filter: blur(20px);
+  transition: filter 900ms ease-out, -webkit-filter 900ms ease-out;
+  will-change: filter;
 }
 .image img.loaded {
-  transform: none;
   -webkit-filter: blur(0);
   filter: blur(0);
 }

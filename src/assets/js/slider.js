@@ -2522,10 +2522,10 @@ function initSlider(slider) {
     imagesLoaded: true
   });
   slider.addEventListener("lazyloaded", () => {
-    flkty.resize();
-    if (flkty.options.adaptiveHeight) {
+    if (!flkty.options.adaptiveHeight) return;
+    requestAnimationFrame(() => {
       flkty.setGallerySize();
-    }
+    });
   });
   if (fade) {
     const select = flkty.select.bind(flkty);

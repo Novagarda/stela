@@ -75,10 +75,11 @@ function initSlider(slider) {
   });
 
   slider.addEventListener("lazyloaded", () => {
-    flkty.resize();
-    if (flkty.options.adaptiveHeight) {
+    if (!flkty.options.adaptiveHeight) return;
+
+    requestAnimationFrame(() => {
       flkty.setGallerySize();
-    }
+    });
   });
 
   // Fade: jump opacity instantly (no crossfade settle / no drag tween)

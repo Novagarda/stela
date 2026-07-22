@@ -1,0 +1,57 @@
+---
+layout: layouts/coming-soon.njk
+title: Proximamente
+description: Stela é o novo modelo de mobilidade sostible de Santiago de Compostela. Proximamente.
+permalink: /coming-soon/
+eleventyExcludeFromCollections: true
+---
+
+<main class="coming-soon">
+  <div class="coming-soon__media" aria-hidden="true">
+    <img
+      class="coming-soon__image"
+      src="{{ '/assets/images/autobus/01.jpg' | url }}"
+      alt=""
+      width="1600"
+      height="900"
+      decoding="async"
+      fetchpriority="high"
+    />
+  </div>
+
+  <div class="coming-soon__veil" aria-hidden="true"></div>
+
+  <div class="coming-soon__frame">
+    <p class="coming-soon__brand">
+      <span class="coming-soon__mark">STELA</span>
+      <span class="coming-soon__lockup">
+        <span class="coming-soon__lockup-line">Mobilidade</span>
+        <span class="coming-soon__lockup-line">Compostela</span>
+      </span>
+    </p>
+
+    <h1 class="coming-soon__title">Proximamente</h1>
+
+    <p class="coming-soon__lede">
+      O novo modelo de mobilidade sostible de Santiago de Compostela.
+    </p>
+  </div>
+
+  <footer class="coming-soon__footer">
+    <a
+      class="coming-soon__concello"
+      href="{{ site.footer.concello.url }}"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        class="coming-soon__concello-image"
+        src="{{ '/assets/images/logo-concello-santiago.svg' | url }}"
+        alt="{{ site.footer.concello.name }}"
+        width="79"
+        height="104"
+        decoding="async"
+      />
+    </a>
+  </footer>
+</main>

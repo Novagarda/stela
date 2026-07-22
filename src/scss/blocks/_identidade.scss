@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-m);
-    margin-top: var(--spacing-m);
+    margin-top: var(--spacing-s);
     margin-inline: var(--spacing-s);
 
     @include media-breakpoint-up(md) {
@@ -15,25 +15,6 @@
 
     .prose {
       margin-inline: 0;
-    }
-  }
-
-  &__cta {
-    flex-shrink: 0;
-    color: var(--accent);
-    text-decoration: none;
-    @include type-body;
-    transition: opacity 0.15s ease;
-
-    &::before {
-      content: "→";
-      margin-right: 0.35em;
-      font-feature-settings: "ss03";
-    }
-
-    &:hover,
-    &:focus-visible {
-      opacity: 0.8;
     }
   }
 }

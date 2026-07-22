@@ -13,6 +13,7 @@
   justify-content: space-between;
   gap: var(--spacing-s);
   padding: var(--spacing-s);
+  padding-left: 0;
   @include type-body;
 }
 
@@ -25,16 +26,45 @@
   @include download-link-box;
   color: inherit;
   text-decoration: none;
-  transition: background-color 0.15s ease;
+  transition: color 0.15s ease;
   @include download-link-arrow;
 
   &:hover,
   &:focus-visible {
-    background-color: color-mix(in srgb, var(--primary) 6%, var(--secondary));
+    color: var(--accent);
   }
 }
 
 .download__link,
 .downloads__link {
   @include download-link-interactive;
+}
+
+.section--downloads {
+  padding-block-end: 0;
+}
+
+.downloads {
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item:not(:first-child) {
+    margin-top: -1px;
+  }
+
+  &__item:last-child {
+
+    .downloads__link,
+    .downloads__label {
+      border-block-end: none;
+    }
+  }
+
+  &__label {
+    @include download-link-box;
+    color: var(--muted);
+  }
 }

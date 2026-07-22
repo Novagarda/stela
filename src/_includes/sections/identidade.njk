@@ -34,23 +34,11 @@
     </div>
   </div>
 
-  {% if section.templateContent or section.data.href %}
+  {% if section.templateContent %}
     <div class="identidade__footer">
-      {% if section.templateContent %}
-        <div class="prose">
-          {{ section.templateContent | safe }}
-        </div>
-      {% endif %}
-      {% if section.data.href %}
-        <a
-          class="identidade__cta"
-          href="{{ section.data.href | url }}"
-          target="_blank"
-          rel="noopener"
-        >
-          {{ section.data.label or "Descarga o Manual de Identidade" }}
-        </a>
-      {% endif %}
+      <div class="prose">
+        {{ section.templateContent | safe }}
+      </div>
     </div>
   {% endif %}
 </section>

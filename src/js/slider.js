@@ -1,5 +1,102 @@
 import Flickity from "flickity";
 import "flickity-fade";
+import PhotoSwipe from "photoswipe";
+
+function getSlideImageData(slideEl) {
+  const img = slideEl.querySelector(".image--lightbox img");
+  if (!img) return null;
+
+  const src = img.getAttribute("data-src") || img.currentSrc || img.src;
+  if (!src) return null;
+
+  let width = img.naturalWidth;
+  let height = img.naturalHeight;
+
+  if (!width || !height) {
+    const picture = img.closest("picture");
+    const aspect =
+      Number.parseFloat(
+        picture?.style?.getPropertyValue("--aspect") ||
+          (picture && getComputedStyle(picture).getPropertyValue("--aspect")) ||
+          "",
+      ) || 0.75;
+    width = 2000;
+    height = Math.round(2000 * aspect);
+  }
+
+  const captionEl = slideEl.querySelector(".item-caption");
+
+  return {
+    src,
+    width,
+    height,
+    alt: img.alt || "",
+    msrc: img.currentSrc || img.src,
+    caption: captionEl?.innerHTML?.trim() || "",
+    bordered: !!img.closest(".image--bordered"),
+  };
+}
+
+function buildLightboxData(slider, cellElement) {
+  const items = [];
+  let startIndex = -1;
+
+  slider.querySelectorAll(".slide").forEach((slide) => {
+    const data = getSlideImageData(slide);
+    if (!data) return;
+
+    if (slide === cellElement) startIndex = items.length;
+    items.push(data);
+  });
+
+  return { items, startIndex };
+}
+
+function openLightbox(items, index, flkty) {
+  if (!items.length || index < 0) return;
+
+  const shouldResume = !!flkty?.options?.autoPlay;
+  flkty?.pausePlayer?.();
+
+  const pswp = new PhotoSwipe({
+    dataSource: items,
+    index,
+    showHideAnimationType: "fade",
+    bgOpacity: 0.92,
+    padding: { top: 24, bottom: 24, left: 16, right: 16 },
+  });
+
+  pswp.on("uiRegister", () => {
+    pswp.ui.registerElement({
+      name: "custom-caption",
+      order: 9,
+      isButton: false,
+      appendTo: "root",
+      html: "",
+      onInit: (el) => {
+        const update = () => {
+          const caption = pswp.currSlide?.data?.caption || "";
+          el.innerHTML = caption;
+          el.hidden = !caption;
+        };
+        pswp.on("change", update);
+        update();
+      },
+    });
+  });
+
+  pswp.on("contentAppend", ({ content }) => {
+    if (!content.data?.bordered) return;
+    const wrap = content.slide?.container;
+    if (wrap) wrap.classList.add("pswp__zoom-wrap--bordered");
+  });
+
+  pswp.on("destroy", () => {
+    if (shouldResume) flkty.playPlayer();
+  });
+
+  pswp.init();
+}
 
 function handlerCaption(flkty, caption) {
   if (!caption) return;
@@ -53,6 +150,7 @@ function initSlider(slider) {
     !isSingleSlide &&
     (slider.dataset.sliderDots === "1" || slider.dataset.sliderDots === "true");
   const adaptiveHeight = isSlider3Mobile(slider);
+  const isSlider3 = !!slider.closest(".block-slider-3");
 
   if (isSingleSlide) {
     slider.classList.add("slider--single");
@@ -62,9 +160,10 @@ function initSlider(slider) {
     cellSelector: ".slide",
     pageDots,
     prevNextButtons: !noArrows && !isSingleSlide,
-    cellAlign: "center",
-    wrapAround: !isSingleSlide,
-    autoPlay: isSingleSlide ? false : 4500,
+    cellAlign: isSlider3 ? "left" : "center",
+    wrapAround: isSlider3 ? false : !isSingleSlide,
+    contain: isSlider3,
+    autoPlay: false,
     draggable: !isSingleSlide,
     fade,
     speed: fade ? 0 : 500,
@@ -165,6 +264,15 @@ function initSlider(slider) {
 
   updateStatus();
   flkty.on("select", updateStatus);
+  flkty.on("staticClick", (event, _pointer, cellElement) => {
+    if (!cellElement) return;
+    if (event.target.closest("a, button, .flickity-button, .flickity-page-dot")) {
+      return;
+    }
+
+    const { items, startIndex } = buildLightboxData(slider, cellElement);
+    openLightbox(items, startIndex, flkty);
+  });
   flkty.on("ready", () => {
     flkty.resize();
     if (flkty.options.adaptiveHeight) {

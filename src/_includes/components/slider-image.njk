@@ -1,4 +1,4 @@
-<div class="image --lazy-image">
+<div class="image image--lightbox --lazy-image{% if item.bordered %} image--bordered{% endif %}">
   <picture{% if item.aspect %} style="--aspect: {{ item.aspect }}"{% endif %}>
     <img
       class="lazy"

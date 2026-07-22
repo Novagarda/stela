@@ -2,7 +2,7 @@
 type: panorama
 order: 3
 id: autobus
-title: Autobuses
+title: Autobús
 lead:
 src: /assets/videos/stella-bus.mp4
 poster: /assets/images/autobus/panorama-poster.jpg
@@ -49,11 +49,13 @@ items:
     label: STELA/BUS
     caption: Tipografía STELA Modular
     aspect: 0.5435
+    bordered: true
   - src: /assets/images/autobus/09.jpg
     alt: Exemplos de tipografía STELA Modular en pantallas de destino
     label: STELA/BUS
     caption: Tipografía STELA Modular
     aspect: 0.5435
+    bordered: true
 ---
 
 A/BUS é a nova rede de autobuses urbanos de Santiago. Unha rede renovada, máis accesible e mellor conectada, pensada para facilitar os desprazamentos cotiáns: ir traballar, estudar, coidar, mercar, viaxar, descubrir Compostela ou regresar á casa.

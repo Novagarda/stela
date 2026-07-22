@@ -3,15 +3,40 @@
   --slider-max-height-3: 30rem;
 }
 
+.slider-js .image--lightbox {
+  cursor: zoom-in;
+}
+
+.pswp__custom-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%);
+  max-width: min(40rem, calc(100% - 2rem));
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: #fff;
+  text-align: center;
+  background: color-mix(in srgb, #000 55%, transparent);
+  pointer-events: none;
+}
+
+.pswp__zoom-wrap--bordered::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border: 1px solid var(--muted);
+  pointer-events: none;
+}
+
 .block.block-slider-3 {
   display: block;
-  // Mobile: inset · Desktop: bleed (lateral crop)
-  margin-inline: var(--spacing-s);
+  // Full-bleed clip; inset lives as padding on the slider
+  margin-inline: 0;
   padding: 0;
-
-  @include media-breakpoint-up(md) {
-    margin-inline: 0;
-  }
+  overflow: hidden;
 }
 
 .block-slider {
@@ -34,6 +59,7 @@
   .slider {
     display: flex;
     flex-direction: column;
+    position: relative;
   }
 
   .slide {
@@ -63,11 +89,17 @@
   }
 
   .slider-controls {
+    position: absolute;
+    bottom: var(--spacing-s);
+    left: var(--spacing-s);
+    right: var(--spacing-s);
+    z-index: 2;
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
     justify-content: center;
     gap: var(--spacing-m);
-    margin-top: var(--spacing-s);
+    margin-top: 0;
+    pointer-events: none;
 
     @include media-breakpoint-up(md) {
       justify-content: space-between;
@@ -76,16 +108,18 @@
 
   .slider-controls__dots {
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
     justify-content: center;
     min-width: 0;
+    pointer-events: auto;
   }
 
   .slider-controls__arrows {
     display: none;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: var(--spacing-xxs);
     margin-left: auto;
+    pointer-events: auto;
 
     @include media-breakpoint-up(md) {
       display: flex;
@@ -115,17 +149,13 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: var(--spacing-xxs);
-
-    @include media-breakpoint-up(md) {
-      justify-content: flex-start;
-    }
   }
 
   .flickity-page-dot {
     width: 0.5rem;
     height: 0.5rem;
     margin: 0;
-    background: color-mix(in srgb, var(--primary) 35%, transparent);
+    background: color-mix(in srgb, var(--primary) 55%, transparent);
 
     &.is-selected {
       background: var(--accent);
@@ -165,10 +195,13 @@
 .block-slider-3 {
   .slider {
     min-height: 0;
+    padding-inline: var(--spacing-s);
   }
 
   .flickity-viewport {
     min-height: 0;
+    // Let cells paint into the slider padding (edge gutters)
+    overflow: visible;
   }
 
   .slide {

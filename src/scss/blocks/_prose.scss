@@ -3,8 +3,8 @@
   max-width: 52rem;
   @include type-body;
 
-  p + p {
-    margin-top: var(--spacing-m);
+  p+p {
+    margin-top: var(--spacing-s);
   }
 
   h2,
@@ -32,9 +32,9 @@
 }
 
 // Text after a gallery
-.block-slider-3 + .prose,
-.block-slider + .prose {
-  margin-top: var(--spacing-m);
+.block-slider-3+.prose,
+.block-slider+.prose {
+  margin-top: var(--spacing-s);
 }
 
 code {

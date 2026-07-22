@@ -23,21 +23,21 @@ export default {
     },
     legal: [
       { label: "Aviso legal", href: "/aviso-legal/" },
-      { label: "Créditos", href: "/creditos/" },
+      { label: "Privacidade", href: "/privacidade/" },
     ],
     copyright: "©{{ year }}",
     social: [
       {
         label: "Instagram",
-        href: "https://www.instagram.com/concellosantiago/",
+        href: "https://www.instagram.com/stelamobilidade/",
+      },
+      {
+        label: "YouTube",
+        href: "https://www.youtube.com/@stelamobilidade",
       },
       {
         label: "Facebook",
-        href: "https://www.facebook.com/concellosantiago/",
-      },
-      {
-        label: "Bluesky",
-        href: "https://bsky.app/profile/concellosantiago.bsky.social",
+        href: "https://www.facebook.com/stelamobilidade",
       },
     ],
   },

@@ -6,6 +6,7 @@ body {
   width: 100%;
   max-width: var(--container-max-width);
   margin-inline: auto;
+  background-color: var(--black);
 }
 
 .main,
@@ -70,6 +71,15 @@ body {
       -webkit-filter: blur(0);
       filter: blur(0);
     }
+  }
+
+  &--bordered picture::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border: 1px solid var(--muted);
+    pointer-events: none;
   }
 
 }

@@ -3,11 +3,12 @@
   margin-top: auto;
   color: var(--primary);
   background-color: var(--secondary);
+  padding: var(--spacing-s);
+  padding-top: 0;
 
   &__band {
     width: 100%;
     line-height: 0;
-    padding-right: var(--spacing-s);
   }
 
   &__band-image {
@@ -19,14 +20,18 @@
   &__inner {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--spacing-xl);
-    padding: var(--spacing-xl) var(--spacing-s) var(--spacing-xxl);
+    gap: var(--spacing-s);
+    padding-block: var(--spacing-s);
+    border-top: 1px solid var(--border);
+    margin-top: var(--spacing-s);
+    padding-bottom: 0;
 
     @include media-breakpoint-up(md) {
       grid-template-columns: minmax(5rem, 2fr) repeat(3, minmax(0, 1fr));
       align-items: start;
-      gap: var(--spacing-m);
-      padding-block: var(--spacing-xxl);
+      gap: var(--spacing-s);
+      padding-block: var(--spacing-s);
+      padding-bottom: 0;
     }
   }
 

@@ -123,7 +123,7 @@ video:not(.video) {
       pointer-events: none;
     }
 
-    > * {
+    >* {
       position: relative;
       z-index: 1;
     }
@@ -220,6 +220,7 @@ video:not(.video) {
 }
 
 @keyframes video-scrub-hint-slide {
+
   0%,
   100% {
     left: 0;
@@ -242,7 +243,10 @@ video:not(.video) {
   }
 
   .video-scrub__controls {
-    position: static;
+    position: absolute;
+    z-index: 1;
+    inset-inline: var(--spacing-s);
+    inset-block-end: var(--spacing-s);
     padding: 0;
     background: none;
     pointer-events: none;
@@ -258,19 +262,20 @@ video:not(.video) {
 
   .video-scrub__progress {
     height: 1px;
+    margin-top: 0;
     border-radius: 0;
-    background: var(--border);
+    background: rgb(0 0 0 / 0.25);
     overflow: visible;
   }
 
   .video-scrub__progress-fill {
-    background: var(--primary);
+    background: var(--black);
   }
 
   .video-scrub__progress-dot {
     width: 0.45rem;
     height: 0.45rem;
-    background: var(--primary);
+    background: var(--black);
   }
 
   .video-scrub__time {
@@ -278,7 +283,7 @@ video:not(.video) {
   }
 
   .block-slider-3 {
-    margin-top: var(--spacing-xl);
+    margin-top: var(--spacing-s);
 
     .item {
       position: relative;

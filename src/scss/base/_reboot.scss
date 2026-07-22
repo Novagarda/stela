@@ -80,9 +80,7 @@ body {
     font-size: var(--font-size-root);
     line-height: var(--line-height-base);
 
-    color: var(--primary);
-    background-color: var(--secondary);
-
+    // Color + background live in _base.scss (via --primary / --bg)
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
 }

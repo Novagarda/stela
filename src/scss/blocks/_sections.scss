@@ -1,6 +1,8 @@
 .section {
   width: 100%;
-  padding-block: var(--spacing-xl);
+  padding-block: var(--spacing-s);
+  padding-block-start: 0;
+  padding-block-end: var(--spacing-s);
   padding-inline: 0;
 
   &__inner {
@@ -8,10 +10,10 @@
   }
 
   &__header {
-    margin-bottom: var(--spacing-m);
+    margin-bottom: var(--spacing-s);
     margin-inline: var(--spacing-s);
     border-top: 1px solid var(--border);
-    padding-top: var(--spacing-xs);
+    padding-top: var(--spacing-s);
     font-size: var(--font-size-m);
   }
 
@@ -26,7 +28,6 @@
   }
 
   &--bus {
-    padding-block: var(--spacing-xl);
     overflow: hidden;
   }
 

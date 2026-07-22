@@ -2,16 +2,16 @@
   color-scheme: dark;
 
   --black: #000000;
-  --gray: #5c5c5c;
+  --gray: #e3e3e3;
   --gray-light: #e4e0da;
   --gray-dark: #2e2b28;
   --white: #FFFFFF;
   --santiago-red: #E6233A;
 
-
   --primary: var(--white);
   --secondary: var(--black);
+  --bg: var(--gray);
   --accent: var(--santiago-red);
   --muted: var(--gray);
-  --border: var(--white);
+  --border: var(--gray);
 }

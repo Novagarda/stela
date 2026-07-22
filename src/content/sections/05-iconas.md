@@ -2,7 +2,7 @@
 type: iconas
 order: 5
 id: iconas
-title: Iconas
+title: Iconografía
 itemsToShow: 1
 ratio: original
 permalink: false

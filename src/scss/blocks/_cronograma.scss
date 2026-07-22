@@ -16,6 +16,10 @@
       grid-template-columns: 6.5rem 1fr;
       gap: var(--spacing-l);
     }
+
+    &:last-child {
+      border-bottom: 1px solid var(--border);
+    }
   }
 
   &__date {

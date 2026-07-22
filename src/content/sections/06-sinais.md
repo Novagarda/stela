@@ -2,7 +2,7 @@
 type: sinais
 order: 6
 id: sinais
-title: Sinais
+title: Sinalización
 itemsToShow: 3
 ratio: original
 permalink: false

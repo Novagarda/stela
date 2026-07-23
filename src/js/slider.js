@@ -9,20 +9,25 @@ function getSlideImageData(slideEl) {
   const src = img.getAttribute("data-src") || img.currentSrc || img.src;
   if (!src) return null;
 
-  let width = img.naturalWidth;
-  let height = img.naturalHeight;
+  const picture = img.closest("picture");
+  const aspect =
+    Number.parseFloat(
+      picture?.style?.getPropertyValue("--aspect") ||
+        (picture && getComputedStyle(picture).getPropertyValue("--aspect")) ||
+        "",
+    ) || 0.75;
 
-  if (!width || !height) {
-    const picture = img.closest("picture");
-    const aspect =
-      Number.parseFloat(
-        picture?.style?.getPropertyValue("--aspect") ||
-          (picture && getComputedStyle(picture).getPropertyValue("--aspect")) ||
-          "",
-      ) || 0.75;
-    width = 2000;
-    height = Math.round(2000 * aspect);
-  }
+  // Thumbs are ~300px; using their naturalWidth makes PhotoSwipe render tiny.
+  // Only trust natural size once the full image has replaced the lazy thumb.
+  const fullLoaded =
+    !img.hasAttribute("data-src") &&
+    img.complete &&
+    img.naturalWidth > 400;
+
+  const width = fullLoaded ? img.naturalWidth : 2000;
+  const height = fullLoaded
+    ? img.naturalHeight
+    : Math.round(2000 * aspect);
 
   const captionEl = slideEl.querySelector(".item-caption");
 

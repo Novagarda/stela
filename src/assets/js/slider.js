@@ -7009,16 +7009,13 @@ function getSlideImageData(slideEl) {
   if (!img) return null;
   const src = img.getAttribute("data-src") || img.currentSrc || img.src;
   if (!src) return null;
-  let width = img.naturalWidth;
-  let height = img.naturalHeight;
-  if (!width || !height) {
-    const picture = img.closest("picture");
-    const aspect = Number.parseFloat(
-      picture?.style?.getPropertyValue("--aspect") || picture && getComputedStyle(picture).getPropertyValue("--aspect") || ""
-    ) || 0.75;
-    width = 2e3;
-    height = Math.round(2e3 * aspect);
-  }
+  const picture = img.closest("picture");
+  const aspect = Number.parseFloat(
+    picture?.style?.getPropertyValue("--aspect") || picture && getComputedStyle(picture).getPropertyValue("--aspect") || ""
+  ) || 0.75;
+  const fullLoaded = !img.hasAttribute("data-src") && img.complete && img.naturalWidth > 400;
+  const width = fullLoaded ? img.naturalWidth : 2e3;
+  const height = fullLoaded ? img.naturalHeight : Math.round(2e3 * aspect);
   const captionEl = slideEl.querySelector(".item-caption");
   return {
     src,
